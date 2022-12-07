@@ -1,0 +1,94 @@
+# This file defines a CI/CD workflow to run in Github Actions to release a preview of the application
+
+# This workflow shall build the flutter app for the web
+# and shall only run when a push event is carried out on branches
+# other than the specified branch(es)
+
+# Name of workflow.
+name: Flutter Build and Deploy Application Preview
+
+on:
+  # NB: This event will only trigger when not on branches specified in `branches-ignore`
+  # and when files other than those in `paths-ignore` are changed / edited.
+  push:
+    branches-ignore:
+      - "main"
+      - "master"
+    paths-ignore: [ '**/README.md' ]
+
+  workflow_dispatch:
+
+# Set environment variables that are scoped at the workflow level
+env:
+  PROPERTIES_PATH: "./android/key.properties"
+  JAVASCRIPT_KEYS_PATH: "web/keys.js"
+
+jobs:
+  build_and_preview:
+    runs-on: ubuntu-latest
+
+    steps:
+      # The branch or tag ref that triggered the workflow will be checked out.
+      # See: https://github.com/actions/checkout
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Install Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: "12.x"
+
+      - name: Avail Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          channel: "stable"
+
+      - name: Clean up and Get dependencies
+        run: |
+          flutter clean
+          flutter pub get
+
+      - name: Creating the `keys.js` file
+        run: echo "${{ secrets.JS_KEYS }}" | base64 --decode > ${{env.JAVASCRIPT_KEYS_PATH}}
+
+      - name: Build application for deployment on website
+        run: flutter build web --web-renderer canvaskit
+
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+
+      # URL: https://github.com/marketplace/actions/deploy-to-firebase-hosting
+      - name: Deploy to Firebase Hosting (Preview)
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_HOSTING_CREDENTIAL_FILE_CONTENT }}'
+          expires: 30d  # length of time preview channel should remain active after the last deploy
+          projectId: ${{ secrets.FIREBASE_WEB_APPID }}
+          channelId: 'pr-${{ github.event.number }}-${{ steps.extract_branch.outputs.branch }}'
+
+      - name: Clean up and Get dependencies
+        run: |
+          flutter clean
+          rm -rf android/.gradle
+          flutter pub get
+
+      - name: Creating the `key.properties` file
+        run: |
+          echo "${{ secrets.KEY_PROPERTIES_FILE_CONTENTS }}" | base64 --decode > ${{env.PROPERTIES_PATH}}
+
+      - name: Decoding base64 key into a file
+        run: echo "${{ secrets.KEY_STORE_CONTENTS }}" | base64 --decode > android/app/upload-keystore.jks
+
+      - name: Build apk for distribution
+        run: flutter build apk
+
+      - name: Upload APK to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.4.0
+        with:
+          appId: ${{secrets.FIREBASE_ANDROID_APPID}}
+          serviceCredentialsFileContent: ${{secrets.FIREBASE_APP_DISTRIBUTION_CREDENTIAL_FILE_CONTENT}}
+          file: build/app/outputs/flutter-apk/app-release.apk
+          debug: true

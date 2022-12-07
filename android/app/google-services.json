@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "812773951106",
+    "project_id": "nurses-todo-app",
+    "storage_bucket": "nurses-todo-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:812773951106:android:4ddec1583daa2b0b1f969b",
+        "android_client_info": {
+          "package_name": "com.example.nurses_todo_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "812773951106-1ohpgcf083u056i2929u90soensb29f2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nurses_todo_app",
+            "certificate_hash": "74a9afffdf21811e71ed0ee37ba20dede3d23d09"
+          }
+        },
+        {
+          "client_id": "812773951106-bkgv8neofn1932ri6n1rqd8aedeuoffg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nurses_todo_app",
+            "certificate_hash": "cf36bc90a360016c6324e6c6a5585be13043151a"
+          }
+        },
+        {
+          "client_id": "812773951106-ljl2ef9jgjvctj2rs9gep23imc5hb6nb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9BO9vn1xl4IT5CE5tcvv48mADgI_2KSY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "812773951106-ljl2ef9jgjvctj2rs9gep23imc5hb6nb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
