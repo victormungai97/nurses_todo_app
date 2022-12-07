@@ -12,5 +12,4 @@ class WidgetKeys {
 
   /// Home page key
   static const homePage = ValueKey('HomePage');
-
 }
