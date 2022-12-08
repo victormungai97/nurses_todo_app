@@ -6,21 +6,30 @@ part of 'controllers.dart';
 
 class LoginController {
   /// Constructor for ``[LoginController]``
-  const LoginController({required this.dataService, required this.encryptionService,});
+  const LoginController({
+    required this.dataService,
+    required this.encryptionService,
+  });
 
   /// Sign user in
-  Future<dynamic> signUserIn({required String email, required String password, Role? role,}) async {
+  Future<dynamic> signUserIn({
+    required String email,
+    required String password,
+    Role? role,
+  }) async {
     try {
       if (!email.exists) return Messages.emailMissing;
       final emailRegExp =
-      RegExp(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$');
+          RegExp(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$');
       if (!emailRegExp.hasMatch(email)) return Messages.invalidEmail;
       var collection = '';
       if (role == Role.nurse) collection = CollectionIDs.nurses;
       if (role == Role.admin) collection = CollectionIDs.administrators;
       final result = await dataService.login(
-          FirebaseFirestore.instance.collection(collection),
-        email: email, password: password, role: role,
+        FirebaseFirestore.instance.collection(collection),
+        email: email,
+        password: password,
+        role: role,
       );
       if (result == null) return Messages.emptyResponse;
       if (result is String) return result;

@@ -7,7 +7,6 @@ part of 'login.dart';
 /// success (when form submits) and failed (when form doesn't submit) responses
 
 class LoginFormBloc extends FormBloc<String, String> {
-
   // final showSuccessResponse = BooleanFieldBloc();
 
   /// Constructor for [LoginFormBloc].
@@ -21,6 +20,7 @@ class LoginFormBloc extends FormBloc<String, String> {
       ],
     );
   }
+
   /// Field BLoC implementing email input text field
   final email = TextFieldBloc(
     validators: [

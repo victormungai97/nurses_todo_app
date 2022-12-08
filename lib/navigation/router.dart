@@ -29,13 +29,18 @@ class AppRouter {
                   : const LandingPage()
               : ErrorScreen(Exception(translate(ErrorMessages.envNotSetup)));
           return CupertinoPage(key: const ValueKey(Routes.root), child: child);*/
-          return CupertinoPage(child: const LoginPage(key: WidgetKeys.loginPage), key: const ValueKey(Routes.root),);
+          return CupertinoPage(
+            child: const LoginPage(key: WidgetKeys.loginPage),
+            key: const ValueKey(Routes.root),
+          );
         },
         path: Routes.root,
       ),
       GoRoute(
         path: Routes.login,
-        builder: (context, GoRouterState state) => const LoginPage(key: WidgetKeys.loginPage,),
+        builder: (context, GoRouterState state) => const LoginPage(
+          key: WidgetKeys.loginPage,
+        ),
       ),
     ],
     // Declare first route to be rendered when app starts

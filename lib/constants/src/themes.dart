@@ -9,10 +9,10 @@ class AppThemes {
   static final ThemeData appTheme = ThemeData(
     primarySwatch: AppColors.kPrimaryColor,
     canvasColor: AppColors.canvasColor,
-  colorScheme: ColorScheme.fromSwatch().copyWith(
-    error: AppColors.errorColor,
-    brightness: Brightness.light,
-  ),
+    colorScheme: ColorScheme.fromSwatch().copyWith(
+      error: AppColors.errorColor,
+      brightness: Brightness.light,
+    ),
     cardColor: Colors.white,
   );
 }

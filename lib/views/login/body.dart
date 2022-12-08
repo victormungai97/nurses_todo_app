@@ -30,7 +30,8 @@ class _Body extends StatelessWidget {
           LoadingDialog.hide(context);
 
           ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.failureResponse!)),);
+            SnackBar(content: Text(state.failureResponse!)),
+          );
         },
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -74,17 +75,15 @@ class _Body extends StatelessWidget {
                   decoration: InputDecoration(
                     labelText: Labels.email,
                     prefixIcon: const Icon(Icons.email),
-                    border: const OutlineInputBorder(
-
-                    ),
+                    border: const OutlineInputBorder(),
                     labelStyle: TextStyle(
                       color: AppColors.kPrimaryColor.shade50,
                       fontSize: 16,
                     ),
                     focusColor: AppColors.kPrimaryColor.shade50,
                   ),
-                  textStyle:
-                  TextStyle(color:AppColors.kPrimaryColor.shade50, fontSize: 16),
+                  textStyle: TextStyle(
+                      color: AppColors.kPrimaryColor.shade50, fontSize: 16),
                 ),
               ),
               const SizedBox(height: 20),
@@ -96,17 +95,17 @@ class _Body extends StatelessWidget {
                   decoration: InputDecoration(
                     labelText: Labels.password,
                     prefixIcon: const Icon(Icons.lock),
-                    border: const OutlineInputBorder(
-
-                    ),
+                    border: const OutlineInputBorder(),
                     labelStyle: TextStyle(
                       color: AppColors.kPrimaryColor.shade300,
                       fontSize: 16,
                     ),
                     focusColor: AppColors.kPrimaryColor.shade300,
                   ),
-                  textStyle:
-                  TextStyle(color: AppColors.kPrimaryColor.shade300, fontSize: 16,),
+                  textStyle: TextStyle(
+                    color: AppColors.kPrimaryColor.shade300,
+                    fontSize: 16,
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
@@ -141,7 +140,8 @@ class _Body extends StatelessWidget {
                 icon: const Icon(Icons.add_moderator),
                 onPressed: loginFormBloc.submit,
               ),*/
-            ],),
+            ],
+          ),
         ),
       ),
     );

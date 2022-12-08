@@ -1,4 +1,3 @@
-
 // lib/blocs/login/login_event.dart
 
 part of 'login_bloc.dart';
@@ -11,6 +10,9 @@ class LoginEvent with _$LoginEvent {
   const factory LoginEvent.initial() = _LoginStarted;
 
   /// Carry out the sign in activity
-  const factory LoginEvent.userSignedIn({required String email, required String password, Role? role,}) = _UserSignedIn;
-
+  const factory LoginEvent.userSignedIn({
+    required String email,
+    required String password,
+    Role? role,
+  }) = _UserSignedIn;
 }

@@ -21,11 +21,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<_UserSignedIn>(_signUserIn);
   }
 
-  Future<void> _signUserIn(_UserSignedIn event, Emitter<LoginState> emit) async {
+  Future<void> _signUserIn(
+      _UserSignedIn event, Emitter<LoginState> emit) async {
     try {
       emit(const LoginState.load());
 
-      final res = _loginController.signUserIn(email: event.email, password: event.password, role: event.role,);
+      final res = _loginController.signUserIn(
+        email: event.email,
+        password: event.password,
+        role: event.role,
+      );
     } catch (error, stackTrace) {
       log(
         'Error in Login BLoC signing user in\n$error',
@@ -37,6 +42,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       emit(const LoginState.failure(exception: Messages.unspecifiedError));
     }
   }
-  
+
   final LoginController _loginController;
 }

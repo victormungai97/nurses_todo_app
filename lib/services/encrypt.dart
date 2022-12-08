@@ -16,8 +16,8 @@ abstract class EncryptionInterface {
 /// Facilitates encryption and decryption of data
 
 class EncryptionService extends EncryptionInterface {
-
-  Future<T> _parseKeyFromFile<T extends RSAAsymmetricKey>(String filename) async {
+  Future<T> _parseKeyFromFile<T extends RSAAsymmetricKey>(
+      String filename) async {
     final key = await rootBundle.loadString('keys/$filename');
     final parser = RSAKeyParser();
     return parser.parse(key) as T;
@@ -25,7 +25,8 @@ class EncryptionService extends EncryptionInterface {
 
   Future<Encrypter> _rsaEncrypter() async {
     final publicKey = await _parseKeyFromFile<RSAPublicKey>('public_key.pem');
-    final privateKey = await _parseKeyFromFile<RSAPrivateKey>('private_key.pem');
+    final privateKey =
+        await _parseKeyFromFile<RSAPrivateKey>('private_key.pem');
     return Encrypter(RSA(publicKey: publicKey, privateKey: privateKey));
   }
 
@@ -44,5 +45,4 @@ class EncryptionService extends EncryptionInterface {
     final decrypted = encrypter.decrypt64(encoded);
     return decrypted;
   }
-
 }

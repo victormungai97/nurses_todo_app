@@ -25,5 +25,4 @@ class AppColors {
 
   /// The default color of background canvas
   static const canvasColor = Color(0xfff6f5f5);
-
 }

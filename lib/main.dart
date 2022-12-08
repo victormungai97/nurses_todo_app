@@ -39,7 +39,8 @@ class MyApp extends StatelessWidget {
       child: RepositoryProvider<LoginController>(
         create: (context) => LoginController(
           dataService: context.read<DataService>(),
-          encryptionService: context.read<EncryptionService>(),),
+          encryptionService: context.read<EncryptionService>(),
+        ),
         child: MultiBlocProvider(
           providers: [
             BlocProvider<LoginBloc>(

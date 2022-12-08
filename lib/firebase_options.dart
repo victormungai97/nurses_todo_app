@@ -70,8 +70,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '812773951106',
     projectId: 'nurses-todo-app',
     storageBucket: 'nurses-todo-app.appspot.com',
-    androidClientId: '812773951106-1ohpgcf083u056i2929u90soensb29f2.apps.googleusercontent.com',
-    iosClientId: '812773951106-6imuahnluglnlicjbjuki9aguo2uek17.apps.googleusercontent.com',
+    androidClientId:
+        '812773951106-1ohpgcf083u056i2929u90soensb29f2.apps.googleusercontent.com',
+    iosClientId:
+        '812773951106-6imuahnluglnlicjbjuki9aguo2uek17.apps.googleusercontent.com',
     iosBundleId: 'com.example.nursesTodoApp',
   );
 }

@@ -24,6 +24,6 @@ class NurseModel with _$NurseModel {
   const NurseModel._();
 
   /// Converts a Dart ``[Map]`` to an instance of ``[NurseModel]``
-  factory NurseModel.fromJson(Map<String, Object?> json)
-  => _$NurseModelFromJson(json);
+  factory NurseModel.fromJson(Map<String, Object?> json) =>
+      _$NurseModelFromJson(json);
 }
