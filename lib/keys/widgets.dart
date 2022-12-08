@@ -12,4 +12,10 @@ class WidgetKeys {
 
   /// Home page key
   static const homePage = ValueKey('HomePage');
+
+  /// Login page key
+  static const loginPage = ValueKey('LoginPage');
+
+  /// Login body key
+  static const loginBody = ValueKey('LoginBody');
 }
