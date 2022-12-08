@@ -50,6 +50,13 @@ jobs:
         with:
           channel: "stable"
 
+      - name: Setup encryption keys
+        run: |
+          mkdir -p keys
+          echo "${{ secrets.AES_ENCRYPTION_KEY }}" | base64 --decode > keys/key.key
+          echo "${{ secrets.RSA_PRIVATE_KEY }}" | base64 --decode > keys/private_key.pem
+          echo "${{ secrets.RSA_PUBLIC_KEY }}" | base64 --decode > keys/public_key.pem
+
       - name: Creating the `key.properties` file
         run: |
           echo "${{ secrets.KEY_PROPERTIES_FILE_CONTENTS }}" | base64 --decode > ${{env.PROPERTIES_PATH}}
