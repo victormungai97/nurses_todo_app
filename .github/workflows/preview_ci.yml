@@ -48,6 +48,13 @@ jobs:
           flutter clean
           flutter pub get
 
+      - name: Setup encryption keys
+        run: |
+          mkdir -p keys
+          echo "${{ secrets.AES_ENCRYPTION_KEY }}" | base64 --decode > keys/key.key
+          echo "${{ secrets.RSA_PRIVATE_KEY }}" | base64 --decode > keys/private_key.pem
+          echo "${{ secrets.RSA_PUBLIC_KEY }}" | base64 --decode > keys/public_key.pem
+
       - name: Creating the `keys.js` file
         run: echo "${{ secrets.JS_KEYS }}" | base64 --decode > ${{env.JAVASCRIPT_KEYS_PATH}}
 
