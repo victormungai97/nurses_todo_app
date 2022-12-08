@@ -87,6 +87,7 @@ android/app/src/main/res/values/keys.xml
 
 # Encryption keys
 *.pem
+*.key
 
 # Passwords
 *.pwd

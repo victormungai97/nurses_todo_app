@@ -45,6 +45,13 @@
             {
               "client_id": "812773951106-ljl2ef9jgjvctj2rs9gep23imc5hb6nb.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "812773951106-6imuahnluglnlicjbjuki9aguo2uek17.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.nursesTodoApp"
+              }
             }
           ]
         }

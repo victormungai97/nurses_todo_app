@@ -11,6 +11,7 @@ analyzer:
     - '**/*.freezed.dart'
     - '**/*.config.dart'
     - '**/*.mocks.dart'
+    - 'lib/firebase_options.dart'
   errors:
     invalid_annotation_target: ignore
     sort_pub_dependencies: false
