@@ -66,8 +66,8 @@ These folders represent various aspects e.g. the screens a user sees and uses an
 Also known as `Screens`, this folder contains the User Interface code for the various pages that an end user will interact 
 with.
 
-[//]: # (Pages found within this folder include)
-[//]: # (* Home)
+Pages found within this folder include:
+* Login
 
 
 Each page has its own folder and these folders have a common structure of `{page_name}` file, 
@@ -78,6 +78,16 @@ allow the constituent parts to be visualized as a single file rather than multip
 `{Page_name}` represents the specified page e.g. login, `body` has the actual *screen* widget and 
 `components` is a directory consisting of _constituent_ widgets that have specialized functions and 
 are included in the main screen widget.
+
+<h5>(b) Navigation</h5>
+
+This directory contains the code that facilitates movement between and redirection to different screens.
+It does this by utilizing the [`go_router`](https://gorouter.dev/) package. Use of the `part of directive`
+is employed to allow the code to be processed as one file.
+
+<h5>(c) Widgets </h5>
+
+Flutter widgets that are reused across multiple pages are saved in this package. This is in line with the concept of [`DRY` (*Don't Repeat Yourself*)](https://www.makeuseof.com/tag/basic-programming-principles/).
 
 _**x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x**_
 
@@ -123,6 +133,9 @@ This layer is the lowest level of the application and interacts with databases, 
 Additionally, this layer also provides a blueprint/framework with which to structure data/state.
 
 The data layer can be split into the following parts:
+* Controllers / Repositories
+* Services
+* Models
 * Extensions
 * Constants
 * Keys
@@ -145,6 +158,23 @@ to be changed or, in the case of strings, facilitates translation to multiple la
 
 Extension methods are found in this folder. These methods add functionality to existing libraries.
 
+<h5>(d) Models</h5>
+
+These are classes that act as a blueprints for the app as they define how data is arranged and utilized.
+These models are generated using [`freezed`](https://pub.dev/packages/freezed) package with the additional use of [`json_serializable`](https://pub.dev/packages/json_serializable).
+These packages provide additional functionality like `copyWith`, `toJson` and `fromJson` methods,
+enabling data to be sent and received from APIs and immutable objects to be created, among others.
+
+<h5>(e) Services</h5>
+
+These expose simple APIs like to perform operations like CRUD, network requests, database calls, encryption e.t.c.
+Their primary responsibility is to **provide raw data** and they should be _generic_ and _versatile_.
+
+<h5>(f) Controllers</h5>
+
+This layer is a wrapper around one or more services with which the Bloc Layer communicates.
+Consequently, classes in this layer can interact with multiple services and perform transformations
+on the data before handing the result to the business logic Layer.
 ---
 
 ## THIRD PARTY PACKAGES
@@ -175,3 +205,6 @@ A number of external third-party packages have been used in this project to prov
 
 + [**_build_runner_**](https://pub.dev/packages/build_runner)
   + This package provides a concrete way of generating files using Dart code, outside of tools like pub.
+
++ [**_encrypt_**](https://pub.dev/packages/encrypt) and [**_pointycastle_**](https://pub.dev/packages/pointycastle):
+  + Some data to be saved in Cloud Firestore due to their sensitive nature and as a result, need to be encoded. These packages provide algorithms that enable the encoding and decoding of data.
