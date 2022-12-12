@@ -16,3 +16,5 @@ analyzer:
   errors:
     invalid_annotation_target: ignore
     sort_pub_dependencies: false
+    cast_nullable_to_non_nullable: ignore
+    iterable_contains_unrelated_type: ignore
