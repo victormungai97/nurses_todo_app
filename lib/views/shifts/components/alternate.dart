@@ -15,14 +15,26 @@ class ToggleShiftWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final shiftsCubit = context.watch<ShiftsCubit>();
-    return ListTile(trailing: Icon(!shiftsCubit.state ? Icons.toggle_on : Icons.toggle_off_outlined, size: 32,
-      color: shiftsCubit.state ? Colors.green : Colors.pinkAccent,),
-    onTap: () {
-      shiftsCubit.toggleShifts();
-      context.read<ShiftsBloc>().add(shiftsCubit.state ? const ShiftsEvent.activeRetrieved(): const ShiftsEvent.completedRetrieved(),);
-    },
+    return ListTile(
+      trailing: Icon(
+        !shiftsCubit.state ? Icons.toggle_on : Icons.toggle_off_outlined,
+        size: 32,
+        color: shiftsCubit.state ? Colors.green : Colors.pinkAccent,
+      ),
+      onTap: () {
+        shiftsCubit.toggleShifts();
+        context.read<ShiftsBloc>().add(
+              shiftsCubit.state
+                  ? const ShiftsEvent.activeRetrieved()
+                  : const ShiftsEvent.completedRetrieved(),
+            );
+      },
       leading: const Icon(Icons.drag_indicator, size: 32),
-    title: Text(shiftsCubit.state ? Labels.activeShifts : Labels.completedShifts, style: Theme.of(context).textTheme.titleLarge,),
-    subtitle: const Text(Labels.alternatePrompt),);
+      title: Text(
+        shiftsCubit.state ? Labels.activeShifts : Labels.completedShifts,
+        style: Theme.of(context).textTheme.titleLarge,
+      ),
+      subtitle: const Text(Labels.alternatePrompt),
+    );
   }
 }

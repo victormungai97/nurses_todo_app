@@ -13,10 +13,24 @@ part 'shifts.g.dart';
 class ShiftsModel with _$ShiftsModel {
   /// Factory Constructor for the ``[ShiftsModel]``
   const factory ShiftsModel({
-    @JsonKey(name: JsonKeys.designation) required String label,
-    @JsonKey(name: JsonKeys.nurses) required List<String> workers,
-    @JsonKey(name: JsonKeys.start, fromJson: Utilities.dateTimeFromTimestamp, toJson: Utilities.dateTimeToTimestamp, nullable: true,) DateTime? begin,
-    @JsonKey(name: JsonKeys.end, fromJson: Utilities.dateTimeFromTimestamp, toJson: Utilities.dateTimeToTimestamp, nullable: true,) DateTime? finish,
+    @JsonKey(name: JsonKeys.designation)
+        required String label,
+    @JsonKey(name: JsonKeys.nurses)
+        required List<String> workers,
+    @JsonKey(
+      name: JsonKeys.start,
+      fromJson: Utilities.dateTimeFromTimestamp,
+      toJson: Utilities.dateTimeToTimestamp,
+      nullable: true,
+    )
+        DateTime? begin,
+    @JsonKey(
+      name: JsonKeys.end,
+      fromJson: Utilities.dateTimeFromTimestamp,
+      toJson: Utilities.dateTimeToTimestamp,
+      nullable: true,
+    )
+        DateTime? finish,
   }) = _ShiftsModel;
 
   /// Private constructor for ``[ShiftsModel]``
@@ -26,5 +40,4 @@ class ShiftsModel with _$ShiftsModel {
   /// Converts a Dart ``[Map]`` to an instance of ``[ShiftsModel]``
   factory ShiftsModel.fromJson(Map<String, Object?> json) =>
       _$ShiftsModelFromJson(json);
-
 }

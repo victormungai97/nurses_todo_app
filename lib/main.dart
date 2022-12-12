@@ -29,16 +29,17 @@ void main() async {
         : await getTemporaryDirectory(),
   );
   // start widget tree
-  runApp(MultiRepositoryProvider(
-    providers: [
-      RepositoryProvider<EncryptionInterface>(
-        create: (context) => EncryptionService(),
-      ),
-      RepositoryProvider<DataInterface>(
-          create: (context) => DataService()
-      ),
-    ],
-    child: const MyApp(key: WidgetKeys.rootApplication),),);
+  runApp(
+    MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<EncryptionInterface>(
+          create: (context) => EncryptionService(),
+        ),
+        RepositoryProvider<DataInterface>(create: (context) => DataService()),
+      ],
+      child: const MyApp(key: WidgetKeys.rootApplication),
+    ),
+  );
 }
 
 /// Root widget
@@ -49,46 +50,39 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider<LoginController>(
-      create: (context) =>
-          LoginController(
-            dataService: context.read<DataInterface>(),
-            encryptionService: context.read<EncryptionInterface>(),
-          ),
+      create: (context) => LoginController(
+        dataService: context.read<DataInterface>(),
+        encryptionService: context.read<EncryptionInterface>(),
+      ),
       child: RepositoryProvider(
-        create: (context) =>
-            ShiftsController(dataService: context.read<DataInterface>(),),
+        create: (context) => ShiftsController(
+          dataService: context.read<DataInterface>(),
+        ),
         child: RepositoryProvider(
-          create: (context) => TasksController(dataService: context.read<DataInterface>(),),
+          create: (context) => TasksController(
+            dataService: context.read<DataInterface>(),
+          ),
           child: MultiBlocProvider(
             providers: [
               BlocProvider<LoginBloc>(
                 create: (context) => LoginBloc(context.read<LoginController>()),
               ),
-              BlocProvider<AuthCubit>(
-                  create: (context) => AuthCubit()
-              ),
-              BlocProvider<RolesCubit>(
-                  create: (context) => RolesCubit()
-              ),
+              BlocProvider<AuthCubit>(create: (context) => AuthCubit()),
+              BlocProvider<RolesCubit>(create: (context) => RolesCubit()),
               BlocProvider<ShiftsBloc>(
                 create: (context) =>
                     ShiftsBloc(context.read<ShiftsController>()),
               ),
-              BlocProvider<ShiftsCubit>(
-                  create: (context) => ShiftsCubit()
-              ),
+              BlocProvider<ShiftsCubit>(create: (context) => ShiftsCubit()),
               BlocProvider<TasksBloc>(
                 create: (context) => TasksBloc(context.read<TasksController>()),
               ),
-              BlocProvider<TasksCubit>(
-                  create: (context) => TasksCubit()
-              ),
+              BlocProvider<TasksCubit>(create: (context) => TasksCubit()),
             ],
-            child: Builder(
-              builder: (context) {
-                return RepositoryProvider<AppRouter>(
-                  create: (_) => AppRouter(context.read<AuthCubit>()),
-                  child: Builder(
+            child: Builder(builder: (context) {
+              return RepositoryProvider<AppRouter>(
+                create: (_) => AppRouter(context.read<AuthCubit>()),
+                child: Builder(
                   builder: (context) {
                     final router = context.read<AppRouter>().router;
                     return MaterialApp.router(
@@ -100,9 +94,9 @@ class MyApp extends StatelessWidget {
                       routeInformationParser: router.routeInformationParser,
                     );
                   },
-                ),);
-              }
-            ),
+                ),
+              );
+            }),
           ),
         ),
       ),

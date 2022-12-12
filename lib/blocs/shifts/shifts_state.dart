@@ -13,8 +13,10 @@ class ShiftsState with _$ShiftsState {
   const factory ShiftsState.load() = ShiftsLoading;
 
   /// Shifts retrieved successfully
-  const factory ShiftsState.obtainSuccess({List<ShiftsModel>? shifts}) = ShiftsObtainSuccess;
+  const factory ShiftsState.obtainSuccess({List<ShiftsModel>? shifts}) =
+      ShiftsObtainSuccess;
 
   /// Problem carrying out shift operation
-  const factory ShiftsState.failure({required String exception}) = ShitfsFailure;
+  const factory ShiftsState.failure({required String exception}) =
+      ShitfsFailure;
 }

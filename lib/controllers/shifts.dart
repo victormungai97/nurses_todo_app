@@ -6,15 +6,19 @@ part of 'controllers.dart';
 
 class ShiftsController {
   /// Constructor for ``[ShiftsController]``
-  const ShiftsController({
-    required this.dataService
-  });
+  const ShiftsController({required this.dataService});
 
   /// Obtain recorded shifts
   Future<dynamic> getShifts() async {
     try {
-      return await dataService.retrieve(FirebaseFirestore.instance.collection(CollectionIDs.shifts),).then((value) {
-        return value?.map((e) => ShiftsModel.fromJson(e.data() as Map<String, Object?>)).toList();
+      return await dataService
+          .retrieve(
+        FirebaseFirestore.instance.collection(CollectionIDs.shifts),
+      )
+          .then((value) {
+        return value
+            ?.map((e) => ShiftsModel.fromJson(e.data() as Map<String, Object?>))
+            .toList();
       });
     } catch (error, stackTrace) {
       log(
@@ -36,7 +40,9 @@ class ShiftsController {
     if (result is! List<ShiftsModel>?) return Messages.weirdResponse;
     final shifts = result ?? [];
     if (shifts.isEmpty) return Messages.noShifts;
-    return shifts.where((e) => (e.finish ?? DateTime.now()).isAfter(DateTime.now())).toList();
+    return shifts
+        .where((e) => (e.finish ?? DateTime.now()).isAfter(DateTime.now()))
+        .toList();
   }
 
   /// Retrieve shifts that are completed
@@ -47,10 +53,11 @@ class ShiftsController {
     if (result is! List<ShiftsModel>?) return Messages.weirdResponse;
     final shifts = result ?? [];
     if (shifts.isEmpty) return Messages.noShifts;
-    return shifts.where((e) => (e.finish ?? DateTime.now()).isBefore(DateTime.now())).toList();
+    return shifts
+        .where((e) => (e.finish ?? DateTime.now()).isBefore(DateTime.now()))
+        .toList();
   }
 
   /// Service for using Cloud Firestore
   final DataInterface dataService;
-
 }

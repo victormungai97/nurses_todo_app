@@ -23,19 +23,30 @@ class ShiftsBloc extends Bloc<ShiftsEvent, ShiftsState> {
     on<_CompletedShiftsRetrieved>(_obtainShifts);
   }
 
-  Future<void> _obtainShifts(ShiftsEvent event, Emitter<ShiftsState> emit,) async {
+  Future<void> _obtainShifts(
+    ShiftsEvent event,
+    Emitter<ShiftsState> emit,
+  ) async {
     try {
       emit(const ShiftsState.load());
 
       dynamic res;
 
-      if (event is _ActiveShiftsRetrieved) {res = await _shiftsController.getActiveShifts();}
-      else if (event is _CompletedShiftsRetrieved) {res = await _shiftsController.getCompletedShifts();}
-      else if (event is _ShiftsRetrieved) {res = await _shiftsController.getShifts();}
+      if (event is _ActiveShiftsRetrieved) {
+        res = await _shiftsController.getActiveShifts();
+      } else if (event is _CompletedShiftsRetrieved) {
+        res = await _shiftsController.getCompletedShifts();
+      } else if (event is _ShiftsRetrieved) {
+        res = await _shiftsController.getShifts();
+      }
 
-      if (res is String) {emit(ShiftsState.failure(exception: res));}
-      else if (res is List<ShiftsModel>?) {emit(ShiftsState.obtainSuccess(shifts: res));}
-      else {emit(const ShiftsState.failure(exception: Messages.weirdResponse));}
+      if (res is String) {
+        emit(ShiftsState.failure(exception: res));
+      } else if (res is List<ShiftsModel>?) {
+        emit(ShiftsState.obtainSuccess(shifts: res));
+      } else {
+        emit(const ShiftsState.failure(exception: Messages.weirdResponse));
+      }
     } catch (error, stackTrace) {
       log(
         'Error in Shifts BLoC obtaining shifts\n$error',

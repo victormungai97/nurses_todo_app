@@ -16,7 +16,6 @@ part 'tasks_state.dart';
 /// BLoC facilitating operation of tasks.
 
 class TasksBloc extends Bloc<TasksEvent, TasksState> {
-
   /// Constructor for ``[TasksBloc]``
   TasksBloc(this._tasksController) : super(const TasksInitial()) {
     on<_TasksStarted>((_, emit) => emit(const TasksState.initial()));
@@ -24,21 +23,35 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     on<_ShiftTasksRetrieved>(_obtainTasks);
   }
 
-  Future<void> _obtainTasks(TasksEvent event, Emitter<TasksState> emit,) async {
+  Future<void> _obtainTasks(
+    TasksEvent event,
+    Emitter<TasksState> emit,
+  ) async {
     try {
       emit(const TasksState.load());
 
       dynamic res;
 
-      if (event is _AllTasksRetrieved) {res = await _tasksController.getAllTasks();}
-      else if (event is _ShiftTasksRetrieved) {res = await _tasksController.getShiftTasks(event.shift ?? DateTime.now(),);}
+      if (event is _AllTasksRetrieved) {
+        res = await _tasksController.getAllTasks();
+      } else if (event is _ShiftTasksRetrieved) {
+        res = await _tasksController.getShiftTasks(
+          event.shift ?? DateTime.now(),
+        );
+      }
 
-      if (res is String) {emit(TasksState.failure(exception: res));}
-      else if (res is List<TaskModel>?) {
-        if (event is _AllTasksRetrieved) {emit(TasksState.tasksSuccess(tasks: res));}
-        else if (event is _ShiftTasksRetrieved) {emit(TasksState.shiftTaskSuccess(tasks: res));}
+      if (res is String) {
+        emit(TasksState.failure(exception: res));
+      } else if (res is List<TaskModel>?) {
+        if (event is _AllTasksRetrieved) {
+          emit(TasksState.tasksSuccess(tasks: res));
+        } else if (event is _ShiftTasksRetrieved) {
+          emit(TasksState.shiftTaskSuccess(tasks: res));
+        }
         return;
-      } else {emit(const TasksState.failure(exception: Messages.weirdResponse));}
+      } else {
+        emit(const TasksState.failure(exception: Messages.weirdResponse));
+      }
     } catch (error, stackTrace) {
       log(
         'Error in Tasks BLoC obtaining tasks\n$error',

@@ -21,10 +21,12 @@ class TaskEntry extends StatelessWidget {
   /// Shift to be displayed
   final TaskModel? taskModel;
 
-
   @override
   Widget build(BuildContext context) {
-    if (taskModel == null) return const ErrorTextWidget(exception: Messages.taskMissing,);
+    if (taskModel == null)
+      return const ErrorTextWidget(
+        exception: Messages.taskMissing,
+      );
 
     final task = taskModel!;
     final now = DateTime.now();
@@ -33,10 +35,7 @@ class TaskEntry extends StatelessWidget {
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10),
-      width: MediaQuery
-          .of(context)
-          .size
-          .width - 20,
+      width: MediaQuery.of(context).size.width - 20,
       height: passed || task.completed ? null : 165,
       alignment: Alignment.center,
       decoration: BoxDecoration(
@@ -48,78 +47,129 @@ class TaskEntry extends StatelessWidget {
         children: [
           ListTile(
             title: Text(task.label),
-            subtitle: Text('Shift: ${DateFormat("MMMM d, yyyy 'at' h:m:ss a").format(shift)}',),
-            trailing: passed || task.completed ? const Icon(Icons.done, color: Colors.green,) : null,
+            subtitle: Text(
+              'Shift: ${DateFormat("MMMM d, yyyy 'at' h:m:ss a").format(shift)}',
+            ),
+            trailing: passed || task.completed
+                ? const Icon(
+                    Icons.done,
+                    color: Colors.green,
+                  )
+                : null,
           ),
           if (!passed && !task.completed)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              children: [
-                Expanded(child: ArgonButton(borderRadius: 12,
-                  color: Colors.green, height: 50,
-                  width: 350,loader: Container(
-                    padding: const EdgeInsets.all(10),
-                    child: const SpinKitRotatingCircle(
-                      color: Colors.white,
-                      // size: loaderWidth ,
-                    ),
-                  ),
-                  onTap: (startLoading, stopLoading, btnState) async {
-                    if (btnState == ButtonState.Idle) {
-                      startLoading();
-                    await context.read<TasksController>().updateTask(task.copyWith(completed: true)).then((_) => context.read<TasksBloc>().add(TasksEvent.shiftTasksRetrieved(shift: context.read<TasksCubit>().state),),);
-                      stopLoading();
-                    }
-                  }, icon: const Icon(Icons.done),child: const Text(
-                Labels.done,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                ),),),),
-                if (task.reschedulable) ...[
-                const SizedBox(width: 25),
-                Expanded(child: ArgonButton(borderRadius: 12,
-                  color: Colors.pink, height: 50,
-                  width: 350,loader: Container(
-                    padding: const EdgeInsets.all(10),
-                    child: const SpinKitHourGlass(
-                      color: Colors.white,
-                      size: 25 ,
-                    ),
-                  ),
-                  onTap: (startLoading, stopLoading, btnState) async {
-                    if (btnState == ButtonState.Idle) {
-                      startLoading();
-                      await context.read<TasksController>().getAllTasks().then((value) async {
-                        if (value is String) {
-                          _showErrorSnackBar(context, value);
-                        } else if (value is List<TaskModel>?) {
-                          final tasks = value ?? [];
-                          await context.read<TasksController>()
-                              .updateTask(task.copyWith(
-                              shift: tasks.last.shift ?? DateTime.now(),),)
-                              .then((_) => context.read<TasksBloc>().add(
-                            TasksEvent.shiftTasksRetrieved(shift: context
-                                .read<TasksCubit>()
-                                .state,),),);
-                        } else {
-                          _showErrorSnackBar(context, Messages.weirdResponse);
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ArgonButton(
+                      borderRadius: 12,
+                      color: Colors.green,
+                      height: 50,
+                      width: 350,
+                      loader: Container(
+                        padding: const EdgeInsets.all(10),
+                        child: const SpinKitRotatingCircle(
+                          color: Colors.white,
+                          // size: loaderWidth ,
+                        ),
+                      ),
+                      onTap: (startLoading, stopLoading, btnState) async {
+                        if (btnState == ButtonState.Idle) {
+                          startLoading();
+                          await context
+                              .read<TasksController>()
+                              .updateTask(task.copyWith(completed: true))
+                              .then(
+                                (_) => context.read<TasksBloc>().add(
+                                      TasksEvent.shiftTasksRetrieved(
+                                          shift:
+                                              context.read<TasksCubit>().state),
+                                    ),
+                              );
+                          stopLoading();
                         }
-                      },);
-                      stopLoading();
-                    }
-                  }, icon: const Icon(Icons.fast_forward),child: const Text(
-                    Labels.reassign,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    ),),),),],
-              ],
+                      },
+                      icon: const Icon(Icons.done),
+                      child: const Text(
+                        Labels.done,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ),
+                  if (task.reschedulable) ...[
+                    const SizedBox(width: 25),
+                    Expanded(
+                      child: ArgonButton(
+                        borderRadius: 12,
+                        color: Colors.pink,
+                        height: 50,
+                        width: 350,
+                        loader: Container(
+                          padding: const EdgeInsets.all(10),
+                          child: const SpinKitHourGlass(
+                            color: Colors.white,
+                            size: 25,
+                          ),
+                        ),
+                        onTap: (startLoading, stopLoading, btnState) async {
+                          if (btnState == ButtonState.Idle) {
+                            startLoading();
+                            await context
+                                .read<TasksController>()
+                                .getAllTasks()
+                                .then(
+                              (value) async {
+                                if (value is String) {
+                                  _showErrorSnackBar(context, value);
+                                } else if (value is List<TaskModel>?) {
+                                  final tasks = value ?? [];
+                                  await context
+                                      .read<TasksController>()
+                                      .updateTask(
+                                        task.copyWith(
+                                          shift: tasks.last.shift ??
+                                              DateTime.now(),
+                                        ),
+                                      )
+                                      .then(
+                                        (_) => context.read<TasksBloc>().add(
+                                              TasksEvent.shiftTasksRetrieved(
+                                                shift: context
+                                                    .read<TasksCubit>()
+                                                    .state,
+                                              ),
+                                            ),
+                                      );
+                                } else {
+                                  _showErrorSnackBar(
+                                      context, Messages.weirdResponse);
+                                }
+                              },
+                            );
+                            stopLoading();
+                          }
+                        },
+                        icon: const Icon(Icons.fast_forward),
+                        child: const Text(
+                          Labels.reassign,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
             ),
-          ),
         ],
       ),
     );

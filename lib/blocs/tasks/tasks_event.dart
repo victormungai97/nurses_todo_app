@@ -13,5 +13,6 @@ class TasksEvent with _$TasksEvent {
   const factory TasksEvent.allTasksRetrieved() = _AllTasksRetrieved;
 
   /// Obtain tasks belonging to a shift
-  const factory TasksEvent.shiftTasksRetrieved({required DateTime? shift}) = _ShiftTasksRetrieved;
+  const factory TasksEvent.shiftTasksRetrieved({required DateTime? shift}) =
+      _ShiftTasksRetrieved;
 }

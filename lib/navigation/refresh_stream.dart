@@ -7,7 +7,7 @@ class _GoRouterRefreshStream extends ChangeNotifier {
     notifyListeners();
     _subscription = stream.asBroadcastStream().listen(
           (dynamic _) => notifyListeners(),
-    );
+        );
   }
 
   late final StreamSubscription<dynamic> _subscription;
@@ -17,5 +17,4 @@ class _GoRouterRefreshStream extends ChangeNotifier {
     _subscription.cancel();
     super.dispose();
   }
-
 }

@@ -23,7 +23,8 @@ class AuthCubit extends HydratedCubit<AuthState> {
     try {
       emit(AuthState.authenticated(email: email, role: role));
     } catch (e, stackTrace) {
-      log('AUTHENTICATION ERROR', error: e, level: Level.SEVERE.value, stackTrace: stackTrace);
+      log('AUTHENTICATION ERROR',
+          error: e, level: Level.SEVERE.value, stackTrace: stackTrace);
       emit(const AuthState.unauthenticated());
     }
   }
@@ -53,7 +54,10 @@ class AuthCubit extends HydratedCubit<AuthState> {
           role = Role.nurse;
           break;
       }
-      return AuthState.authenticated(email: user[JsonKeys.emailAddress] as String, role: role,);
+      return AuthState.authenticated(
+        email: user[JsonKeys.emailAddress] as String,
+        role: role,
+      );
     }
     return const AuthState.unauthenticated();
   }

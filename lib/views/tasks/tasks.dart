@@ -23,9 +23,11 @@ class TasksPage extends StatefulWidget {
 }
 
 class _TasksPageState extends State<TasksPage> {
-
   void _load() {
-    context.read<TasksBloc>().add(TasksEvent.shiftTasksRetrieved(shift: context.read<TasksCubit>().state),);
+    context.read<TasksBloc>().add(
+          TasksEvent.shiftTasksRetrieved(
+              shift: context.read<TasksCubit>().state),
+        );
   }
 
   @override
@@ -37,11 +39,12 @@ class _TasksPageState extends State<TasksPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return WillPopScope(
       child: CustomScaffold(
         body: const _Body(key: WidgetKeys.tasksBody),
-          actions: [IconButton(icon: const Icon(Icons.replay), onPressed: _load),],
+        actions: [
+          IconButton(icon: const Icon(Icons.replay), onPressed: _load),
+        ],
       ),
       onWillPop: () async {
         debugPrint('-- onWillPop -- called');

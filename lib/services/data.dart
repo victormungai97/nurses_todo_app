@@ -19,10 +19,16 @@ abstract class DataInterface {
   }) async {}
 
   /// Obtain data from Firestore
-  Future<List<QueryDocumentSnapshot>?> retrieve(CollectionReference reference) async => null;
+  Future<List<QueryDocumentSnapshot>?> retrieve(
+          CollectionReference reference) async =>
+      null;
 
   /// Update a document in Firestore
-  Future<void> update(CollectionReference reference, String? id, Map<String, dynamic> data,) async {}
+  Future<void> update(
+    CollectionReference reference,
+    String? id,
+    Map<String, dynamic> data,
+  ) async {}
 }
 
 /// Concrete implementation of Database functionality
@@ -52,10 +58,15 @@ class DataService extends DataInterface {
     Role? role,
   }) async {
     try {
-      final data = await reference.where(JsonKeys.emailAddress, isEqualTo: email).get().then((QuerySnapshot value) {
-        if (value.docs.isEmpty) return null;
-        return value.docs.first.data();
-      },);
+      final data = await reference
+          .where(JsonKeys.emailAddress, isEqualTo: email)
+          .get()
+          .then(
+        (QuerySnapshot value) {
+          if (value.docs.isEmpty) return null;
+          return value.docs.first.data();
+        },
+      );
       if (data == null) return Messages.noUser;
       switch (role) {
         case null:
@@ -106,7 +117,11 @@ class DataService extends DataInterface {
   }
 
   @override
-  Future<void> update(CollectionReference reference, String? id, Map<String, dynamic> data,) async {
+  Future<void> update(
+    CollectionReference reference,
+    String? id,
+    Map<String, dynamic> data,
+  ) async {
     await reference.doc(id).update(data);
   }
 }

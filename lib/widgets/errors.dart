@@ -15,10 +15,7 @@ class ErrorTextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10),
-      width: MediaQuery
-          .of(context)
-          .size
-          .width - 20,
+      width: MediaQuery.of(context).size.width - 20,
       height: 80,
       alignment: Alignment.center,
       decoration: BoxDecoration(

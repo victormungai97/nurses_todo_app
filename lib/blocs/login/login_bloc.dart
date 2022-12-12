@@ -21,7 +21,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   Future<void> _signUserIn(
-      _UserSignedIn event, Emitter<LoginState> emit,) async {
+    _UserSignedIn event,
+    Emitter<LoginState> emit,
+  ) async {
     try {
       emit(const LoginState.load());
 

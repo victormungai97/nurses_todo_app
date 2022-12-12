@@ -15,9 +15,19 @@ class TasksCubit extends Cubit<DateTime?> {
   /// Receive a date string and format it into date to then serve as shift time
   void updateShift(String? shift) {
     try {
-      emit(shift.exists ? DateFormat("MMMM d, yyyy 'at' h:m:ss a").parse(shift!) : DateTime.now(),);
+      emit(
+        shift.exists
+            ? DateFormat("MMMM d, yyyy 'at' h:m:ss a").parse(shift!)
+            : DateTime.now(),
+      );
     } catch (error, stackTrace) {
-      log('Error updating shifts', error: error, stackTrace: stackTrace, level: Level.SEVERE.value, time: DateTime.now(),);
+      log(
+        'Error updating shifts',
+        error: error,
+        stackTrace: stackTrace,
+        level: Level.SEVERE.value,
+        time: DateTime.now(),
+      );
     }
   }
 }

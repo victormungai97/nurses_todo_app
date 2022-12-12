@@ -40,10 +40,8 @@ class LoginFormBloc extends FormBloc<String, String> {
 
   @override
   Future<void> onSubmitting() async {
-
     await Future<void>.delayed(const Duration(seconds: 1));
 
     emitSuccess();
-
   }
 }

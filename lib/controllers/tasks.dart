@@ -6,19 +6,26 @@ part of 'controllers.dart';
 
 class TasksController {
   /// Constructor for ``[TasksController]``
-  const TasksController({
-    required this.dataService
-  });
+  const TasksController({required this.dataService});
 
-  static CollectionReference get _reference => FirebaseFirestore.instance.collection(CollectionIDs.tasks);
+  static CollectionReference get _reference =>
+      FirebaseFirestore.instance.collection(CollectionIDs.tasks);
 
   /// Create a new task
   Future<String?> addTask({String? message, String? shift}) async {
     try {
       if (!message.exists) return 'Message for task is required';
       if (!shift.exists) return 'Start for task shift is required';
-      return await dataService.add(_reference, TaskModel(label: message!, shift: DateFormat("MMMM d, yyyy 'at' h:m:ss a").parse(shift!),).toJson()..removeWhere((key, value) =>
-      {JsonKeys.id, 'reschedulable'}.contains(key),),);
+      return await dataService.add(
+        _reference,
+        TaskModel(
+          label: message!,
+          shift: DateFormat("MMMM d, yyyy 'at' h:m:ss a").parse(shift!),
+        ).toJson()
+          ..removeWhere(
+            (key, value) => {JsonKeys.id, 'reschedulable'}.contains(key),
+          ),
+      );
     } catch (error, stackTrace) {
       log(
         'Something went wrong creating a new task\n$error',
@@ -35,11 +42,19 @@ class TasksController {
   Future<dynamic> getAllTasks() async {
     try {
       return await dataService.retrieve(_reference).then((value) {
-        final tasks = value?.map((e) => TaskModel.fromJson(e.data() as Map<String, Object?>).copyWith(id: e.reference.id),).toList() ?? [];
+        final tasks = value
+                ?.map(
+                  (e) => TaskModel.fromJson(e.data() as Map<String, Object?>)
+                      .copyWith(id: e.reference.id),
+                )
+                .toList() ??
+            [];
         final now = DateTime.now();
-          tasks.sort((a, b) => (a.shift ?? now).compareTo(b.shift ?? now));
-          final lastShift = tasks.last.shift;
-          return tasks.map((e) => e.copyWith(reschedulable: e.shift != lastShift)).toList();
+        tasks.sort((a, b) => (a.shift ?? now).compareTo(b.shift ?? now));
+        final lastShift = tasks.last.shift;
+        return tasks
+            .map((e) => e.copyWith(reschedulable: e.shift != lastShift))
+            .toList();
       });
     } catch (error, stackTrace) {
       log(
@@ -65,7 +80,14 @@ class TasksController {
       return tasks.where((element) {
         final e = element.shift ?? DateTime.now();
         final id = DateTime(e.year, e.month, e.day, e.hour, e.minute, e.second);
-        final time = DateTime(shift.year, shift.month, shift.day, shift.hour, shift.minute, shift.second,);
+        final time = DateTime(
+          shift.year,
+          shift.month,
+          shift.day,
+          shift.hour,
+          shift.minute,
+          shift.second,
+        );
         return id.isAtSameMomentAs(time);
       }).toList();
     } catch (error, stackTrace) {
@@ -83,7 +105,7 @@ class TasksController {
   /// Update a task document in Firestore
   Future<void> updateTask(TaskModel taskModel) async {
     try {
-      final json =  taskModel.toJson();
+      final json = taskModel.toJson();
       if (json.containsKey('reschedulable')) json.remove('reschedulable');
       await dataService.update(_reference, taskModel.id, json);
     } catch (error, stackTrace) {
@@ -99,5 +121,4 @@ class TasksController {
 
   /// Service for using Cloud Firestore
   final DataInterface dataService;
-
 }

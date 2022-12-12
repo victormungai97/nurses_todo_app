@@ -11,8 +11,12 @@ import 'package:nurses_todo_app/navigation/navigation.dart';
 /// Generic App Bar for use through out application
 class AppTitle extends AppBar {
   /// Constructor for ``[AppTitle]``
-  AppTitle(BuildContext context, {super.key, List<Widget>? actions, bool? implyLeading,})
-      : super(
+  AppTitle(
+    BuildContext context, {
+    super.key,
+    List<Widget>? actions,
+    bool? implyLeading,
+  }) : super(
           iconTheme: const IconThemeData(color: Colors.white),
           centerTitle: true,
           title: Padding(
@@ -25,7 +29,10 @@ class AppTitle extends AppBar {
           actions: [
             ...actions ?? [],
             if (context.read<AuthCubit>().state is Authenticated)
-              IconButton(onPressed: context.read<AuthCubit>().logout, icon: const Icon(Icons.logout_rounded),),
+              IconButton(
+                onPressed: context.read<AuthCubit>().logout,
+                icon: const Icon(Icons.logout_rounded),
+              ),
           ],
           backgroundColor: Colors.black,
           elevation: 0,

@@ -5,7 +5,7 @@ part of 'shifts_bloc.dart';
 /// Base class for events handling shifts
 
 @freezed
-class ShiftsEvent with _$ShiftsEvent{
+class ShiftsEvent with _$ShiftsEvent {
   /// Set up activity via an initial event
   const factory ShiftsEvent.initial() = _ShiftsStarted;
 

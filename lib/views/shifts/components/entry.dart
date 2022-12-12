@@ -21,20 +21,24 @@ class ShiftEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (shiftModel == null) return const Center(child: ErrorTextWidget(exception: Messages.shiftMissing),);
+    if (shiftModel == null)
+      return const Center(
+        child: ErrorTextWidget(exception: Messages.shiftMissing),
+      );
 
     final onDuty = shiftModel?.workers ?? [];
 
     final start = shiftModel?.begin ?? DateTime.now();
-    final end = shiftModel?.finish ?? DateTime.now().add(const Duration(hours: 8),);
-    final duration = '${DateFormat("h:mm a").format(start)} - ${DateFormat("h:mm a").format(end)}';
+    final end = shiftModel?.finish ??
+        DateTime.now().add(
+          const Duration(hours: 8),
+        );
+    final duration =
+        '${DateFormat("h:mm a").format(start)} - ${DateFormat("h:mm a").format(end)}';
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10),
-      width: MediaQuery
-          .of(context)
-          .size
-          .width - 20,
+      width: MediaQuery.of(context).size.width - 20,
       height: 200,
       alignment: Alignment.center,
       decoration: BoxDecoration(
@@ -44,11 +48,32 @@ class ShiftEntry extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       child: Column(
         children: [
-          Text('${shiftModel!.label.title} of ${DateFormat("EEEE dd MMM yyyy").format(start)}', style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18), textAlign: TextAlign.start,),
+          Text(
+            '${shiftModel!.label.title} of ${DateFormat("EEEE dd MMM yyyy").format(start)}',
+            style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+            textAlign: TextAlign.start,
+          ),
           const SizedBox(height: 10),
-          const Text(Labels.dutyNurses, style: TextStyle(color: Colors.grey, fontSize: 16), textAlign: TextAlign.start,),
+          const Text(
+            Labels.dutyNurses,
+            style: TextStyle(color: Colors.grey, fontSize: 16),
+            textAlign: TextAlign.start,
+          ),
           const SizedBox(height: 10),
-          SingleChildScrollView(scrollDirection: Axis.horizontal, child: Row(children: onDuty.map((e) => CircleAvatar(radius: 20, backgroundImage: NetworkImage('https://ui-avatars.com/api/?name=$e&background=random'),),).toList(),),),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: onDuty
+                  .map(
+                    (e) => CircleAvatar(
+                      radius: 20,
+                      backgroundImage: NetworkImage(
+                          'https://ui-avatars.com/api/?name=$e&background=random'),
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
           const SizedBox(height: 5),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
@@ -56,7 +81,10 @@ class ShiftEntry extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.schedule_outlined, color: Colors.orangeAccent,),
+                  const Icon(
+                    Icons.schedule_outlined,
+                    color: Colors.orangeAccent,
+                  ),
                   const SizedBox(width: 12.5),
                   Text(duration),
                 ],
@@ -64,8 +92,16 @@ class ShiftEntry extends StatelessWidget {
             ),
           ),
           InkWell(
-            child: const Text(Labels.redirectToTasks, style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline,),),
-            onTap: () => context.push(Uri(path: Routes.tasks, queryParameters: {'shift': DateFormat("MMMM d, yyyy 'at' h:mm:ss a").format(start)}).toString()),
+            child: const Text(
+              Labels.redirectToTasks,
+              style: TextStyle(
+                color: Colors.blue,
+                decoration: TextDecoration.underline,
+              ),
+            ),
+            onTap: () => context.push(Uri(path: Routes.tasks, queryParameters: {
+              'shift': DateFormat("MMMM d, yyyy 'at' h:mm:ss a").format(start)
+            }).toString()),
           ),
         ],
       ),

@@ -13,12 +13,13 @@ class TasksState with _$TasksState {
   const factory TasksState.load() = TasksLoading;
 
   /// All tasks retrieved successfully
-  const factory TasksState.tasksSuccess({List<TaskModel>? tasks}) = TasksSuccess;
+  const factory TasksState.tasksSuccess({List<TaskModel>? tasks}) =
+      TasksSuccess;
 
   /// Tasks for shift retrieved successfully
-  const factory TasksState.shiftTaskSuccess({List<TaskModel>? tasks}) = ShiftTasksSuccess;
+  const factory TasksState.shiftTaskSuccess({List<TaskModel>? tasks}) =
+      ShiftTasksSuccess;
 
   /// Problem carrying out shift operation
   const factory TasksState.failure({required String exception}) = TasksFailure;
-
 }

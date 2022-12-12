@@ -26,9 +26,7 @@ class AppRouter {
               child = const ShiftsPage(key: WidgetKeys.shiftsPage);
             }
           }
-          return CupertinoPage(child: child,
-            key: const ValueKey(Routes.root)
-          );
+          return CupertinoPage(child: child, key: const ValueKey(Routes.root));
         },
         path: Routes.root,
       ),
@@ -48,9 +46,8 @@ class AppRouter {
         path: Routes.tasks,
         builder: (context, GoRouterState state) {
           context.read<TasksCubit>().updateShift(state.queryParams['shift']);
-          return const TasksPage(
-          key: WidgetKeys.tasksPage
-        );},
+          return const TasksPage(key: WidgetKeys.tasksPage);
+        },
       ),
     ],
     redirect: (context, state) {
@@ -60,8 +57,7 @@ class AppRouter {
       final isLoggingIn = {Routes.root, Routes.login}.contains(state.location);
 
       // Checks if the user is logged in.
-      final isLoggedIn =
-          bloc.state is Authenticated;
+      final isLoggedIn = bloc.state is Authenticated;
 
       // Verifies that the current location is not the Login page
       if (isLoggedIn && isLoggingIn) {
@@ -87,5 +83,4 @@ class AppRouter {
 
   // Keep track of the user's logged in state
   final AuthCubit _authenticationCubit;
-
 }

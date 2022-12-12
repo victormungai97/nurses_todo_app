@@ -35,13 +35,21 @@ class SimpleBlocObserver extends BlocObserver {
     Transition<dynamic, dynamic> transition,
   ) {
     super.onTransition(bloc, transition);
-    log('onTransition -- ${bloc.runtimeType}, $transition', time: _now, level: 700,);
+    log(
+      'onTransition -- ${bloc.runtimeType}, $transition',
+      time: _now,
+      level: 700,
+    );
   }
 
   @override
   void onError(BlocBase<dynamic> bloc, Object error, StackTrace stackTrace) {
     log(
-      'onError -- ${bloc.runtimeType}', time: _now, level: 1000, error: error, stackTrace: stackTrace,
+      'onError -- ${bloc.runtimeType}',
+      time: _now,
+      level: 1000,
+      error: error,
+      stackTrace: stackTrace,
     );
     super.onError(bloc, error, stackTrace);
   }

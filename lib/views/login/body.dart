@@ -27,10 +27,13 @@ class _Body extends StatelessWidget {
 
           debugPrint('-- onSuccess --\n${state.successResponse}');
 
-          context.read<LoginBloc>().add(LoginEvent.userSignedIn(
-              email: loginFormBloc.email.value,
-              password: loginFormBloc.password.value,
-              role: rolesCubit.state,),);
+          context.read<LoginBloc>().add(
+                LoginEvent.userSignedIn(
+                  email: loginFormBloc.email.value,
+                  password: loginFormBloc.password.value,
+                  role: rolesCubit.state,
+                ),
+              );
         },
         onFailure: (context, state) {
           LoadingDialog.hide(context);
@@ -70,83 +73,87 @@ class _Body extends StatelessWidget {
                         focusColor: AppColors.kPrimaryColor,
                       ),
                       textStyle: const TextStyle(
-                        color: AppColors.kPrimaryColor, fontSize: 16,),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  BlocListener<AuthCubit, AuthState>(
-  listener: (context, state) {
-    if (state is Authenticated) {
-      final role = state.role;
-      if (role == Role.admin || role == Role.nurse) {
-        context.replace(role == Role.nurse ? Routes.shifts : Routes.root,);
-      }
-    }
-  },
-  child: Theme(
-                    data: ThemeData(primaryColor: Colors.black),
-                    child: TextFieldBlocBuilder(
-                      textFieldBloc: loginFormBloc.password,
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        labelText: Labels.password,
-                        prefixIcon: Icon(Icons.lock),
-                        border: OutlineInputBorder(),
-                        labelStyle: TextStyle(
-                          color: AppColors.kPrimaryColor,
-                          fontSize: 16,
-                        ),
-                        focusColor: AppColors.kPrimaryColor,
-                      ),
-                      textStyle: const TextStyle(
                         color: AppColors.kPrimaryColor,
                         fontSize: 16,
                       ),
                     ),
                   ),
-),
+                  const SizedBox(height: 20),
+                  BlocListener<AuthCubit, AuthState>(
+                    listener: (context, state) {
+                      if (state is Authenticated) {
+                        final role = state.role;
+                        if (role == Role.admin || role == Role.nurse) {
+                          context.replace(
+                            role == Role.nurse ? Routes.shifts : Routes.root,
+                          );
+                        }
+                      }
+                    },
+                    child: Theme(
+                      data: ThemeData(primaryColor: Colors.black),
+                      child: TextFieldBlocBuilder(
+                        textFieldBloc: loginFormBloc.password,
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          labelText: Labels.password,
+                          prefixIcon: Icon(Icons.lock),
+                          border: OutlineInputBorder(),
+                          labelStyle: TextStyle(
+                            color: AppColors.kPrimaryColor,
+                            fontSize: 16,
+                          ),
+                          focusColor: AppColors.kPrimaryColor,
+                        ),
+                        textStyle: const TextStyle(
+                          color: AppColors.kPrimaryColor,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
                   if (state is LoginLoading)
                     const Center(child: CircularProgressIndicator())
-                  else
-                  ...[
-                  const SizedBox(height: 20),
-                  ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      foregroundColor: Colors.white,
-                      disabledForegroundColor: Colors.grey,
-                      shape: const StadiumBorder(),
-                      textStyle: GoogleFonts.berkshireSwash(fontSize: 24),
+                  else ...[
+                    const SizedBox(height: 20),
+                    ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        foregroundColor: Colors.white,
+                        disabledForegroundColor: Colors.grey,
+                        shape: const StadiumBorder(),
+                        textStyle: GoogleFonts.berkshireSwash(fontSize: 24),
+                      ),
+                      label: const Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Text(Labels.nurseLogin),
+                      ),
+                      onPressed: () {
+                        rolesCubit.updateRole(Role.nurse);
+                        loginFormBloc.submit();
+                      },
+                      icon: const Icon(Icons.health_and_safety),
                     ),
-                    label: const Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Text(Labels.nurseLogin),
+                    const SizedBox(height: 20),
+                    ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        foregroundColor: Colors.white,
+                        disabledForegroundColor: Colors.grey,
+                        shape: const StadiumBorder(),
+                        textStyle: GoogleFonts.berkshireSwash(fontSize: 24),
+                      ),
+                      label: const Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Text(Labels.adminLogin),
+                      ),
+                      onPressed: () {
+                        rolesCubit.updateRole(Role.admin);
+                        loginFormBloc.submit();
+                      },
+                      icon: const Icon(Icons.add_moderator),
                     ),
-                    onPressed: () {
-                      rolesCubit.updateRole(Role.nurse);
-                      loginFormBloc.submit();
-                    },
-                    icon: const Icon(Icons.health_and_safety),
-                  ),
-                  const SizedBox(height: 20),
-              ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
-                  foregroundColor: Colors.white,
-                  disabledForegroundColor: Colors.grey,
-                  shape: const StadiumBorder(),
-                  textStyle: GoogleFonts.berkshireSwash(fontSize: 24),
-                ),
-                label: const Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text(Labels.adminLogin),
-                ),
-                onPressed: () {
-                      rolesCubit.updateRole(Role.admin);
-                      loginFormBloc.submit();
-                    },
-                icon: const Icon(Icons.add_moderator),
-              ),],
+                  ],
                 ],
               ),
             );
@@ -154,9 +161,19 @@ class _Body extends StatelessWidget {
           listener: (context, state) {
             state.whenOrNull(
               failure: (error) => ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(error, style: const TextStyle(color: AppColors.errorColor,),),),
+                SnackBar(
+                  content: Text(
+                    error,
+                    style: const TextStyle(
+                      color: AppColors.errorColor,
+                    ),
+                  ),
+                ),
               ),
-              success: () => authCubit.authenticate(loginFormBloc.email.value, rolesCubit.state,),
+              success: () => authCubit.authenticate(
+                loginFormBloc.email.value,
+                rolesCubit.state,
+              ),
             );
           },
         ),
