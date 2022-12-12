@@ -43,7 +43,7 @@ class _Body extends StatelessWidget {
         key: WidgetKeys.shiftTasksView,
         tasks: tasks,
       ),
-      failure: (exception) => _Error(exception: exception),
+      failure: (exception) => _Error(exception: exception, key: const ValueKey('TasksExceptionWidget'),),
     );
   }
 }
@@ -76,7 +76,7 @@ class _TasksView extends StatelessWidget {
               ),
               onTap: () => context.read<TasksBloc>().add(
                     TasksEvent.shiftTasksRetrieved(
-                        shift: context.read<TasksCubit>().state),
+                        shift: context.read<TasksCubit>().state,),
                   ),
             ),
             const SizedBox(height: 8),
@@ -131,7 +131,7 @@ class _Error extends StatelessWidget {
             ),
             onTap: () => context.read<TasksBloc>().add(
                   TasksEvent.shiftTasksRetrieved(
-                      shift: context.read<TasksCubit>().state),
+                      shift: context.read<TasksCubit>().state,),
                 ),
           ),
         ],

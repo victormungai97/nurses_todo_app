@@ -4,11 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
-import 'package:nurses_todo_app/blocs/blocs.dart';
 import 'package:nurses_todo_app/constants/constants.dart';
 import 'package:nurses_todo_app/controllers/controllers.dart';
-import 'package:nurses_todo_app/cubits/cubits.dart';
-import 'package:nurses_todo_app/extensions/extensions.dart';
 import 'package:nurses_todo_app/keys/keys.dart';
 import 'package:nurses_todo_app/models/models.dart';
 import 'package:nurses_todo_app/navigation/navigation.dart';
@@ -108,7 +105,7 @@ class CustomScaffold extends StatelessWidget {
                           LoadingDialog.hide(context);
 
                           debugPrint(
-                              '-- onSuccess --\n${state.successResponse}');
+                              '-- onSuccess --\n${state.successResponse}',);
 
                           final message = formBloc.message.value;
                           final shift = formBloc.shifts.value;
@@ -149,7 +146,7 @@ class CustomScaffold extends StatelessWidget {
                           builder: (context, state) {
                             if (state is FormBlocLoading) {
                               return const Center(
-                                  child: CircularProgressIndicator());
+                                  child: CircularProgressIndicator(),);
                             }
 
                             if (state is FormBlocLoadFailed) {
@@ -158,11 +155,11 @@ class CustomScaffold extends StatelessWidget {
                                   child: Column(
                                     children: <Widget>[
                                       const Icon(Icons.sentiment_dissatisfied,
-                                          size: 70),
+                                          size: 70,),
                                       const SizedBox(height: 20),
                                       Container(
                                         padding: const EdgeInsets.symmetric(
-                                            horizontal: 12),
+                                            horizontal: 12,),
                                         alignment: Alignment.center,
                                         child: const Text(
                                           Messages.unspecifiedError,
@@ -265,7 +262,7 @@ class CustomScaffold extends StatelessWidget {
           // resizeToAvoidBottomInset: false,
           backgroundColor: Theme.of(context).canvasColor,
         );
-      }),
+      },),
     );
   }
 }

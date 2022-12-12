@@ -20,7 +20,7 @@ abstract class DataInterface {
 
   /// Obtain data from Firestore
   Future<List<QueryDocumentSnapshot>?> retrieve(
-          CollectionReference reference) async =>
+          CollectionReference reference,) async =>
       null;
 
   /// Update a document in Firestore

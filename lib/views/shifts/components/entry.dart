@@ -21,10 +21,11 @@ class ShiftEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (shiftModel == null)
+    if (shiftModel == null) {
       return const Center(
         child: ErrorTextWidget(exception: Messages.shiftMissing),
       );
+    }
 
     final onDuty = shiftModel?.workers ?? [];
 
@@ -33,8 +34,9 @@ class ShiftEntry extends StatelessWidget {
         DateTime.now().add(
           const Duration(hours: 8),
         );
-    final duration =
-        '${DateFormat("h:mm a").format(start)} - ${DateFormat("h:mm a").format(end)}';
+    final format = DateFormat('h:mm a');
+    final dateFormat = DateFormat('EEEE dd MMM yyyy');
+    final duration = '${format.format(start)} - ${format.format(end)}';
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -49,7 +51,7 @@ class ShiftEntry extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            '${shiftModel!.label.title} of ${DateFormat("EEEE dd MMM yyyy").format(start)}',
+            '${shiftModel!.label.title} of ${dateFormat.format(start)}',
             style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
             textAlign: TextAlign.start,
           ),
@@ -68,7 +70,7 @@ class ShiftEntry extends StatelessWidget {
                     (e) => CircleAvatar(
                       radius: 20,
                       backgroundImage: NetworkImage(
-                          'https://ui-avatars.com/api/?name=$e&background=random'),
+                          'https://ui-avatars.com/api/?name=$e&background=random',),
                     ),
                   )
                   .toList(),
@@ -101,7 +103,7 @@ class ShiftEntry extends StatelessWidget {
             ),
             onTap: () => context.push(Uri(path: Routes.tasks, queryParameters: {
               'shift': DateFormat("MMMM d, yyyy 'at' h:mm:ss a").format(start)
-            }).toString()),
+            },).toString(),),
           ),
         ],
       ),
