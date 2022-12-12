@@ -33,12 +33,26 @@ class TaskEntry extends StatelessWidget {
     final now = DateTime.now();
     final shift = task.shift ?? now;
     final dateFormat = DateFormat("MMMM d, yyyy 'at' h:m:ss a");
-    final passed = shift.add(const Duration(hours: 8)).isBefore(now);
+
+    // Get nurses and shifts
+    final shifts = context.watch<ShiftsBloc>().state;
+    final loggedInUser = context.watch<AuthCubit>().state;
+    // Only allow nurses assigned to shift to see
+    final allowedNurse =         loggedInUser is Authenticated &&
+        shifts is ShiftsObtainSuccess &&
+        shifts.shifts != null &&
+        shifts.shifts!.map((e) => e.workers).contains(loggedInUser.email);
+
+    final started = shift.isBefore(now);
+    final completed = shift.add(Utilities.shift).isBefore(now);
+    final ongoing = started && !completed;
+    final actionsVisibility = ongoing &&
+        !task.completed && allowedNurse;
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10),
       width: MediaQuery.of(context).size.width - 20,
-      height: passed || task.completed ? null : 165,
+      height: !actionsVisibility ? null : 165,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
@@ -52,14 +66,14 @@ class TaskEntry extends StatelessWidget {
             subtitle: Text(
               'Shift: ${dateFormat.format(shift)}',
             ),
-            trailing: passed || task.completed
+            trailing: completed && !started || task.completed
                 ? const Icon(
                     Icons.done,
-                    color: Colors.green,
+                    color: Colors.green
                   )
                 : null,
           ),
-          if (!passed && !task.completed)
+          if (actionsVisibility)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
@@ -135,8 +149,7 @@ class TaskEntry extends StatelessWidget {
                                       .read<TasksController>()
                                       .updateTask(
                                         task.copyWith(
-                                          shift: tasks.last.shift ??
-                                              DateTime.now(),
+                                          shift: tasks.last.shift ?? now,
                                         ),
                                       )
                                       .then(

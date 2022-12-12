@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
               BlocProvider<RolesCubit>(create: (context) => RolesCubit()),
               BlocProvider<ShiftsBloc>(
                 create: (context) =>
-                    ShiftsBloc(context.read<ShiftsController>()),
+                    ShiftsBloc(context.read<ShiftsController>(),),
               ),
               BlocProvider<ShiftsCubit>(create: (context) => ShiftsCubit()),
               BlocProvider<TasksBloc>(

@@ -21,7 +21,10 @@ samples, guidance on mobile development, and a full API reference.
 # Nurses TODO List Application
 **_An application built in Flutter that creates a todo-list for nurses_** 
 
-Here, a nurse is enabled to create, see and reassign all planned actions for a shift and day
+Here, a nurse is enabled to create, see and reassign all planned actions for a shift and day.
+
+In this application, a nurse can sign into the application, view the various shifts and tasks per shift and mark any task per shift as done.
+A task can only be marked as completed if said nurse is assigned to the task's shift and the shift is **currently** ongoing.
 
 > It is a test application with no commercial usage.
 
@@ -30,6 +33,20 @@ Here, a nurse is enabled to create, see and reassign all planned actions for a s
 <a href="https://nurses-todo-app.web.app/" style="margin: 0;">
     <img src="https://github.com/victormungai97/magic_fitness_app/blob/master/badges/firebase_hosting.png" alt="Visit Nurses TODO Application on the Website" style=" height: 80%; width: 64.5%">
 </a>
+
+## Pending Tasks
+### 1. Administrative roles
+
+I had hoped to create an administrative role for control over the system. 
+Users logged in to this role would have the ability to add, update and remove nurses, patients and tasks.
+They, however, would not be able to mark tasks as done but they could reassign tasks.
+
+### 2. Better UI
+
+I based the UI on my final year [project](https://drive.google.com/drive/folders/10YJVOKy0LyRYBSPCPk8csf7LNYBSmCb4?usp=sharing), which I will admit is not the best. 
+Given more time and a UI/UX designer, I think a better interface would be delivered.
+
+__PS:__ I assumed that a shift lasts 8 hours
 
 ---
 
@@ -40,6 +57,125 @@ Here, a nurse is enabled to create, see and reassign all planned actions for a s
 
 This application implements the [`BLoC`](https://bloclibrary.dev) **(Business Logic Component)** design pattern. This pattern 
 seeks to provide a separation of concerns by segmenting the code into discrete sections.
+
+_**Dart Code file structure**_
+```markdown
+lib/
+├── bloc_observer.dart
+├── blocs
+│   ├── blocs.dart
+│   ├── login
+│   │   ├── login_bloc.dart
+│   │   ├── login_bloc.freezed.dart
+│   │   ├── login_event.dart
+│   │   └── login_state.dart
+│   ├── shifts
+│   │   ├── shifts_bloc.dart
+│   │   ├── shifts_bloc.freezed.dart
+│   │   ├── shifts_event.dart
+│   │   └── shifts_state.dart
+│   └── tasks
+│       ├── tasks_bloc.dart
+│       ├── tasks_bloc.freezed.dart
+│       ├── tasks_event.dart
+│       └── tasks_state.dart
+├── constants
+│   ├── constants.dart
+│   └── src
+│       ├── colors.dart
+│       ├── enums
+│       │   ├── enums.dart
+│       │   └── roles.dart
+│       ├── strings
+│       │   ├── labels.dart
+│       │   ├── messages.dart
+│       │   └── strings.dart
+│       ├── themes.dart
+│       └── utils.dart
+├── controllers
+│   ├── controllers.dart
+│   ├── login.dart
+│   ├── shifts.dart
+│   └── tasks.dart
+├── cubits
+│   ├── auth_cubit
+│   │   ├── auth_cubit.dart
+│   │   ├── auth_cubit.freezed.dart
+│   │   └── auth_state.dart
+│   ├── cubits.dart
+│   ├── roles_cubit.dart
+│   ├── shifts_cubit.dart
+│   └── tasks_cubit.dart
+├── extensions
+│   ├── extensions.dart
+│   └── string_extension.dart
+├── firebase_options.dart
+├── keys
+│   ├── collections.dart
+│   ├── jsons.dart
+│   ├── keys.dart
+│   └── widgets.dart
+├── main.dart
+├── models
+│   ├── data
+│   │   ├── administrators
+│   │   │   ├── administrators.dart
+│   │   │   ├── administrators.freezed.dart
+│   │   │   └── administrators.g.dart
+│   │   ├── nurses
+│   │   │   ├── nurses.dart
+│   │   │   ├── nurses.freezed.dart
+│   │   │   └── nurses.g.dart
+│   │   ├── shifts
+│   │   │   ├── shifts.dart
+│   │   │   ├── shifts.freezed.dart
+│   │   │   └── shifts.g.dart
+│   │   └── tasks
+│   │       ├── tasks.dart
+│   │       ├── tasks.freezed.dart
+│   │       └── tasks.g.dart
+│   └── models.dart
+├── navigation
+│   ├── navigation.dart
+│   ├── refresh_stream.dart
+│   ├── router.dart
+│   └── routes.dart
+├── plugins
+│   ├── argon_buttons.dart
+│   └── plugins.dart
+├── services
+│   ├── data.dart
+│   ├── encrypt.dart
+│   └── services.dart
+├── views
+│   ├── login
+│   │   ├── bloc.dart
+│   │   ├── body.dart
+│   │   └── login.dart
+│   ├── shifts
+│   │   ├── body.dart
+│   │   ├── components
+│   │   │   ├── alternate.dart
+│   │   │   ├── components.dart
+│   │   │   └── entry.dart
+│   │   └── shifts.dart
+│   ├── tasks
+│   │   ├── body.dart
+│   │   ├── components
+│   │   │   ├── components.dart
+│   │   │   └── entry.dart
+│   │   └── tasks.dart
+│   └── views.dart
+└── widgets
+    ├── dialogs.dart
+    ├── errors.dart
+    ├── scaffold.dart
+    ├── title.dart
+    └── widgets.dart
+test/
+└── widget_test.dart
+
+```
 
 The __*presentation*__ aspects of the application, which represents where an **end user directly interacts** 
 with the application, is distinct from the _**business logic**_, which contains the **actual functionality** 
@@ -68,6 +204,8 @@ with.
 
 Pages found within this folder include:
 * Login
+* Shifts
+* Tasks
 
 
 Each page has its own folder and these folders have a common structure of `{page_name}` file, 

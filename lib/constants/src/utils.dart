@@ -30,4 +30,7 @@ class Utilities {
       '_nanoseconds': timestamp.nanoseconds,
     };
   }
+
+  /// Typical duration of a shift
+  static Duration get shift => const Duration(hours: 8);
 }

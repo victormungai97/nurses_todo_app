@@ -31,9 +31,7 @@ class ShiftEntry extends StatelessWidget {
 
     final start = shiftModel?.begin ?? DateTime.now();
     final end = shiftModel?.finish ??
-        DateTime.now().add(
-          const Duration(hours: 8),
-        );
+        DateTime.now().add(Utilities.shift);
     final format = DateFormat('h:mm a');
     final dateFormat = DateFormat('EEEE dd MMM yyyy');
     final duration = '${format.format(start)} - ${format.format(end)}';
