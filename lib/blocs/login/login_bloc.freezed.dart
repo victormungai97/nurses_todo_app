@@ -341,7 +341,7 @@ mixin _$LoginState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() load,
-    required TResult Function() create,
+    required TResult Function() success,
     required TResult Function(String exception) failure,
   }) =>
       throw _privateConstructorUsedError;
@@ -349,7 +349,7 @@ mixin _$LoginState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? load,
-    TResult? Function()? create,
+    TResult? Function()? success,
     TResult? Function(String exception)? failure,
   }) =>
       throw _privateConstructorUsedError;
@@ -357,7 +357,7 @@ mixin _$LoginState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? load,
-    TResult Function()? create,
+    TResult Function()? success,
     TResult Function(String exception)? failure,
     required TResult orElse(),
   }) =>
@@ -366,7 +366,7 @@ mixin _$LoginState {
   TResult map<TResult extends Object?>({
     required TResult Function(LoginInitial value) initial,
     required TResult Function(LoginLoading value) load,
-    required TResult Function(LoginUserSuccess value) create,
+    required TResult Function(LoginUserSuccess value) success,
     required TResult Function(LoginFailure value) failure,
   }) =>
       throw _privateConstructorUsedError;
@@ -374,7 +374,7 @@ mixin _$LoginState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoginInitial value)? initial,
     TResult? Function(LoginLoading value)? load,
-    TResult? Function(LoginUserSuccess value)? create,
+    TResult? Function(LoginUserSuccess value)? success,
     TResult? Function(LoginFailure value)? failure,
   }) =>
       throw _privateConstructorUsedError;
@@ -382,7 +382,7 @@ mixin _$LoginState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoginInitial value)? initial,
     TResult Function(LoginLoading value)? load,
-    TResult Function(LoginUserSuccess value)? create,
+    TResult Function(LoginUserSuccess value)? success,
     TResult Function(LoginFailure value)? failure,
     required TResult orElse(),
   }) =>
@@ -447,7 +447,7 @@ class _$LoginInitial implements LoginInitial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() load,
-    required TResult Function() create,
+    required TResult Function() success,
     required TResult Function(String exception) failure,
   }) {
     return initial();
@@ -458,7 +458,7 @@ class _$LoginInitial implements LoginInitial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? load,
-    TResult? Function()? create,
+    TResult? Function()? success,
     TResult? Function(String exception)? failure,
   }) {
     return initial?.call();
@@ -469,7 +469,7 @@ class _$LoginInitial implements LoginInitial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? load,
-    TResult Function()? create,
+    TResult Function()? success,
     TResult Function(String exception)? failure,
     required TResult orElse(),
   }) {
@@ -484,7 +484,7 @@ class _$LoginInitial implements LoginInitial {
   TResult map<TResult extends Object?>({
     required TResult Function(LoginInitial value) initial,
     required TResult Function(LoginLoading value) load,
-    required TResult Function(LoginUserSuccess value) create,
+    required TResult Function(LoginUserSuccess value) success,
     required TResult Function(LoginFailure value) failure,
   }) {
     return initial(this);
@@ -495,7 +495,7 @@ class _$LoginInitial implements LoginInitial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoginInitial value)? initial,
     TResult? Function(LoginLoading value)? load,
-    TResult? Function(LoginUserSuccess value)? create,
+    TResult? Function(LoginUserSuccess value)? success,
     TResult? Function(LoginFailure value)? failure,
   }) {
     return initial?.call(this);
@@ -506,7 +506,7 @@ class _$LoginInitial implements LoginInitial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoginInitial value)? initial,
     TResult Function(LoginLoading value)? load,
-    TResult Function(LoginUserSuccess value)? create,
+    TResult Function(LoginUserSuccess value)? success,
     TResult Function(LoginFailure value)? failure,
     required TResult orElse(),
   }) {
@@ -561,7 +561,7 @@ class _$LoginLoading implements LoginLoading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() load,
-    required TResult Function() create,
+    required TResult Function() success,
     required TResult Function(String exception) failure,
   }) {
     return load();
@@ -572,7 +572,7 @@ class _$LoginLoading implements LoginLoading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? load,
-    TResult? Function()? create,
+    TResult? Function()? success,
     TResult? Function(String exception)? failure,
   }) {
     return load?.call();
@@ -583,7 +583,7 @@ class _$LoginLoading implements LoginLoading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? load,
-    TResult Function()? create,
+    TResult Function()? success,
     TResult Function(String exception)? failure,
     required TResult orElse(),
   }) {
@@ -598,7 +598,7 @@ class _$LoginLoading implements LoginLoading {
   TResult map<TResult extends Object?>({
     required TResult Function(LoginInitial value) initial,
     required TResult Function(LoginLoading value) load,
-    required TResult Function(LoginUserSuccess value) create,
+    required TResult Function(LoginUserSuccess value) success,
     required TResult Function(LoginFailure value) failure,
   }) {
     return load(this);
@@ -609,7 +609,7 @@ class _$LoginLoading implements LoginLoading {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoginInitial value)? initial,
     TResult? Function(LoginLoading value)? load,
-    TResult? Function(LoginUserSuccess value)? create,
+    TResult? Function(LoginUserSuccess value)? success,
     TResult? Function(LoginFailure value)? failure,
   }) {
     return load?.call(this);
@@ -620,7 +620,7 @@ class _$LoginLoading implements LoginLoading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoginInitial value)? initial,
     TResult Function(LoginLoading value)? load,
-    TResult Function(LoginUserSuccess value)? create,
+    TResult Function(LoginUserSuccess value)? success,
     TResult Function(LoginFailure value)? failure,
     required TResult orElse(),
   }) {
@@ -658,7 +658,7 @@ class _$LoginUserSuccess implements LoginUserSuccess {
 
   @override
   String toString() {
-    return 'LoginState.create()';
+    return 'LoginState.success()';
   }
 
   @override
@@ -675,10 +675,10 @@ class _$LoginUserSuccess implements LoginUserSuccess {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() load,
-    required TResult Function() create,
+    required TResult Function() success,
     required TResult Function(String exception) failure,
   }) {
-    return create();
+    return success();
   }
 
   @override
@@ -686,10 +686,10 @@ class _$LoginUserSuccess implements LoginUserSuccess {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? load,
-    TResult? Function()? create,
+    TResult? Function()? success,
     TResult? Function(String exception)? failure,
   }) {
-    return create?.call();
+    return success?.call();
   }
 
   @override
@@ -697,12 +697,12 @@ class _$LoginUserSuccess implements LoginUserSuccess {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? load,
-    TResult Function()? create,
+    TResult Function()? success,
     TResult Function(String exception)? failure,
     required TResult orElse(),
   }) {
-    if (create != null) {
-      return create();
+    if (success != null) {
+      return success();
     }
     return orElse();
   }
@@ -712,10 +712,10 @@ class _$LoginUserSuccess implements LoginUserSuccess {
   TResult map<TResult extends Object?>({
     required TResult Function(LoginInitial value) initial,
     required TResult Function(LoginLoading value) load,
-    required TResult Function(LoginUserSuccess value) create,
+    required TResult Function(LoginUserSuccess value) success,
     required TResult Function(LoginFailure value) failure,
   }) {
-    return create(this);
+    return success(this);
   }
 
   @override
@@ -723,10 +723,10 @@ class _$LoginUserSuccess implements LoginUserSuccess {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoginInitial value)? initial,
     TResult? Function(LoginLoading value)? load,
-    TResult? Function(LoginUserSuccess value)? create,
+    TResult? Function(LoginUserSuccess value)? success,
     TResult? Function(LoginFailure value)? failure,
   }) {
-    return create?.call(this);
+    return success?.call(this);
   }
 
   @override
@@ -734,12 +734,12 @@ class _$LoginUserSuccess implements LoginUserSuccess {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoginInitial value)? initial,
     TResult Function(LoginLoading value)? load,
-    TResult Function(LoginUserSuccess value)? create,
+    TResult Function(LoginUserSuccess value)? success,
     TResult Function(LoginFailure value)? failure,
     required TResult orElse(),
   }) {
-    if (create != null) {
-      return create(this);
+    if (success != null) {
+      return success(this);
     }
     return orElse();
   }
@@ -816,7 +816,7 @@ class _$LoginFailure implements LoginFailure {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() load,
-    required TResult Function() create,
+    required TResult Function() success,
     required TResult Function(String exception) failure,
   }) {
     return failure(exception);
@@ -827,7 +827,7 @@ class _$LoginFailure implements LoginFailure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? load,
-    TResult? Function()? create,
+    TResult? Function()? success,
     TResult? Function(String exception)? failure,
   }) {
     return failure?.call(exception);
@@ -838,7 +838,7 @@ class _$LoginFailure implements LoginFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? load,
-    TResult Function()? create,
+    TResult Function()? success,
     TResult Function(String exception)? failure,
     required TResult orElse(),
   }) {
@@ -853,7 +853,7 @@ class _$LoginFailure implements LoginFailure {
   TResult map<TResult extends Object?>({
     required TResult Function(LoginInitial value) initial,
     required TResult Function(LoginLoading value) load,
-    required TResult Function(LoginUserSuccess value) create,
+    required TResult Function(LoginUserSuccess value) success,
     required TResult Function(LoginFailure value) failure,
   }) {
     return failure(this);
@@ -864,7 +864,7 @@ class _$LoginFailure implements LoginFailure {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoginInitial value)? initial,
     TResult? Function(LoginLoading value)? load,
-    TResult? Function(LoginUserSuccess value)? create,
+    TResult? Function(LoginUserSuccess value)? success,
     TResult? Function(LoginFailure value)? failure,
   }) {
     return failure?.call(this);
@@ -875,7 +875,7 @@ class _$LoginFailure implements LoginFailure {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoginInitial value)? initial,
     TResult Function(LoginLoading value)? load,
-    TResult Function(LoginUserSuccess value)? create,
+    TResult Function(LoginUserSuccess value)? success,
     TResult Function(LoginFailure value)? failure,
     required TResult orElse(),
   }) {

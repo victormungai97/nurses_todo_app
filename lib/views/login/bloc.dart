@@ -40,18 +40,10 @@ class LoginFormBloc extends FormBloc<String, String> {
 
   @override
   Future<void> onSubmitting() async {
-    debugPrint(email.value);
-    debugPrint(password.value);
-    // debugPrint(showSuccessResponse.value.toString());
 
     await Future<void>.delayed(const Duration(seconds: 1));
 
     emitSuccess();
 
-    // if (showSuccessResponse.value) {
-    //   emitSuccess();
-    // } else {
-    //   emitFailure(failureResponse: 'This is an awesome error!');
-    // }
   }
 }
