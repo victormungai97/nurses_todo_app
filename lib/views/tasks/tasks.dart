@@ -26,7 +26,8 @@ class _TasksPageState extends State<TasksPage> {
   void _load() {
     context.read<TasksBloc>().add(
           TasksEvent.shiftTasksRetrieved(
-              shift: context.read<TasksCubit>().state),
+            shift: context.read<TasksCubit>().state,
+          ),
         );
   }
 

@@ -46,8 +46,14 @@ class _Body extends StatelessWidget {
               itemCount: shifts.length + 1,
               padding: const EdgeInsets.symmetric(vertical: 15),
             )
-          : const _Error(exception: Messages.noShifts),
-      failure: (exception) => _Error(exception: exception),
+          : const _Error(
+              exception: Messages.noShifts,
+              key: ValueKey('NoShiftsWidget'),
+            ),
+      failure: (exception) => _Error(
+        exception: exception,
+        key: const ValueKey('ShiftsExceptionWidget'),
+      ),
     );
   }
 }

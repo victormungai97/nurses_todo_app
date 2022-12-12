@@ -23,14 +23,16 @@ class TaskEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (taskModel == null)
+    if (taskModel == null) {
       return const ErrorTextWidget(
         exception: Messages.taskMissing,
       );
+    }
 
     final task = taskModel!;
     final now = DateTime.now();
     final shift = task.shift ?? now;
+    final dateFormat = DateFormat("MMMM d, yyyy 'at' h:m:ss a");
     final passed = shift.add(const Duration(hours: 8)).isBefore(now);
 
     return Container(
@@ -48,7 +50,7 @@ class TaskEntry extends StatelessWidget {
           ListTile(
             title: Text(task.label),
             subtitle: Text(
-              'Shift: ${DateFormat("MMMM d, yyyy 'at' h:m:ss a").format(shift)}',
+              'Shift: ${dateFormat.format(shift)}',
             ),
             trailing: passed || task.completed
                 ? const Icon(
@@ -84,8 +86,8 @@ class TaskEntry extends StatelessWidget {
                               .then(
                                 (_) => context.read<TasksBloc>().add(
                                       TasksEvent.shiftTasksRetrieved(
-                                          shift:
-                                              context.read<TasksCubit>().state),
+                                        shift: context.read<TasksCubit>().state,
+                                      ),
                                     ),
                               );
                           stopLoading();
@@ -148,7 +150,9 @@ class TaskEntry extends StatelessWidget {
                                       );
                                 } else {
                                   _showErrorSnackBar(
-                                      context, Messages.weirdResponse);
+                                    context,
+                                    Messages.weirdResponse,
+                                  );
                                 }
                               },
                             );

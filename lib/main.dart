@@ -79,24 +79,27 @@ class MyApp extends StatelessWidget {
               ),
               BlocProvider<TasksCubit>(create: (context) => TasksCubit()),
             ],
-            child: Builder(builder: (context) {
-              return RepositoryProvider<AppRouter>(
-                create: (_) => AppRouter(context.read<AuthCubit>()),
-                child: Builder(
-                  builder: (context) {
-                    final router = context.read<AppRouter>().router;
-                    return MaterialApp.router(
-                      routeInformationProvider: router.routeInformationProvider,
-                      debugShowCheckedModeBanner: false,
-                      theme: AppThemes.appTheme,
-                      title: Labels.appName,
-                      routerDelegate: router.routerDelegate,
-                      routeInformationParser: router.routeInformationParser,
-                    );
-                  },
-                ),
-              );
-            }),
+            child: Builder(
+              builder: (context) {
+                return RepositoryProvider<AppRouter>(
+                  create: (_) => AppRouter(context.read<AuthCubit>()),
+                  child: Builder(
+                    builder: (context) {
+                      final router = context.read<AppRouter>().router;
+                      return MaterialApp.router(
+                        routeInformationProvider:
+                            router.routeInformationProvider,
+                        debugShowCheckedModeBanner: false,
+                        theme: AppThemes.appTheme,
+                        title: Labels.appName,
+                        routerDelegate: router.routerDelegate,
+                        routeInformationParser: router.routeInformationParser,
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ),

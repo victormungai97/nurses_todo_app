@@ -23,8 +23,12 @@ class AuthCubit extends HydratedCubit<AuthState> {
     try {
       emit(AuthState.authenticated(email: email, role: role));
     } catch (e, stackTrace) {
-      log('AUTHENTICATION ERROR',
-          error: e, level: Level.SEVERE.value, stackTrace: stackTrace);
+      log(
+        'AUTHENTICATION ERROR',
+        error: e,
+        level: Level.SEVERE.value,
+        stackTrace: stackTrace,
+      );
       emit(const AuthState.unauthenticated());
     }
   }

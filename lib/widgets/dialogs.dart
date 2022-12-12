@@ -77,7 +77,11 @@ Future<dynamic> showCustomModalBottomSheet(
             if (actions.isNotEmpty == true)
               Padding(
                 padding: const EdgeInsets.only(
-                    right: 20, left: 20, top: 16, bottom: 20),
+                  right: 20,
+                  left: 20,
+                  top: 16,
+                  bottom: 20,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: List.generate(
