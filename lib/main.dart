@@ -22,7 +22,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   // set up to start up bloc
-  // Bloc.observer = SimpleBlocObserver();
+  Bloc.observer = SimpleBlocObserver();
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: kIsWeb
         ? HydratedStorage.webStorageDirectory
