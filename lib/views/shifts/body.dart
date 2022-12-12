@@ -26,35 +26,34 @@ class _Body extends StatelessWidget {
                 SizedBox(height: 12.5),
               ],
             ),
-            onTap: () =>
-                bloc.add(
-                  context
-                      .read<ShiftsCubit>()
-                      .state
-                      ? const ShiftsEvent.activeRetrieved()
-                      : const ShiftsEvent.completedRetrieved(),
-                ),
+            onTap: () => bloc.add(
+              context.read<ShiftsCubit>().state
+                  ? const ShiftsEvent.activeRetrieved()
+                  : const ShiftsEvent.completedRetrieved(),
+            ),
           ),
         );
       },
       load: () => const Center(child: CircularProgressIndicator()),
-      obtainSuccess: (shifts) =>
-      shifts != null && shifts.isNotEmpty
+      obtainSuccess: (shifts) => shifts != null && shifts.isNotEmpty
           ? ListView.separated(
-        separatorBuilder: (_, i) => const SizedBox(height: 25),
-        itemBuilder: (_, i) =>
-        i == 0
-            ? const Center(
-          child: ToggleShiftWidget(),
-        )
-            : ShiftEntry(shiftModel: shifts[i - 1]),
-        itemCount: shifts.length + 1,
-        padding: const EdgeInsets.symmetric(vertical: 15),
-      )
+              separatorBuilder: (_, i) => const SizedBox(height: 25),
+              itemBuilder: (_, i) => i == 0
+                  ? const Center(
+                      child: ToggleShiftWidget(),
+                    )
+                  : ShiftEntry(shiftModel: shifts[i - 1]),
+              itemCount: shifts.length + 1,
+              padding: const EdgeInsets.symmetric(vertical: 15),
+            )
           : const _Error(
-        exception: Messages.noShifts, key: ValueKey('NoShiftsWidget'),),
-      failure: (exception) =>
-          _Error(exception: exception, key: const ValueKey('ShiftsExceptionWidget'),),
+              exception: Messages.noShifts,
+              key: ValueKey('NoShiftsWidget'),
+            ),
+      failure: (exception) => _Error(
+        exception: exception,
+        key: const ValueKey('ShiftsExceptionWidget'),
+      ),
     );
   }
 }

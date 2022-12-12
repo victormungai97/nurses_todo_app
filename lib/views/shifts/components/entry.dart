@@ -70,7 +70,8 @@ class ShiftEntry extends StatelessWidget {
                     (e) => CircleAvatar(
                       radius: 20,
                       backgroundImage: NetworkImage(
-                          'https://ui-avatars.com/api/?name=$e&background=random',),
+                        'https://ui-avatars.com/api/?name=$e&background=random',
+                      ),
                     ),
                   )
                   .toList(),
@@ -101,9 +102,15 @@ class ShiftEntry extends StatelessWidget {
                 decoration: TextDecoration.underline,
               ),
             ),
-            onTap: () => context.push(Uri(path: Routes.tasks, queryParameters: {
-              'shift': DateFormat("MMMM d, yyyy 'at' h:mm:ss a").format(start)
-            },).toString(),),
+            onTap: () => context.push(
+              Uri(
+                path: Routes.tasks,
+                queryParameters: {
+                  'shift':
+                      DateFormat("MMMM d, yyyy 'at' h:mm:ss a").format(start)
+                },
+              ).toString(),
+            ),
           ),
         ],
       ),

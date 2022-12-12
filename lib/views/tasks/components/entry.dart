@@ -86,8 +86,8 @@ class TaskEntry extends StatelessWidget {
                               .then(
                                 (_) => context.read<TasksBloc>().add(
                                       TasksEvent.shiftTasksRetrieved(
-                                          shift:
-                                              context.read<TasksCubit>().state,),
+                                        shift: context.read<TasksCubit>().state,
+                                      ),
                                     ),
                               );
                           stopLoading();
@@ -150,7 +150,9 @@ class TaskEntry extends StatelessWidget {
                                       );
                                 } else {
                                   _showErrorSnackBar(
-                                      context, Messages.weirdResponse,);
+                                    context,
+                                    Messages.weirdResponse,
+                                  );
                                 }
                               },
                             );

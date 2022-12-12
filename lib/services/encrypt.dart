@@ -17,7 +17,8 @@ abstract class EncryptionInterface {
 
 class EncryptionService extends EncryptionInterface {
   Future<T> _parseKeyFromFile<T extends RSAAsymmetricKey>(
-      String filename,) async {
+    String filename,
+  ) async {
     final key = await rootBundle.loadString('keys/$filename');
     final parser = RSAKeyParser();
     return parser.parse(key) as T;
