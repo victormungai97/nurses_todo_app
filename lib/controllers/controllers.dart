@@ -6,6 +6,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:nurses_todo_app/constants/constants.dart';
 import 'package:nurses_todo_app/extensions/extensions.dart';
@@ -14,3 +15,7 @@ import 'package:nurses_todo_app/models/models.dart';
 import 'package:nurses_todo_app/services/services.dart';
 
 part 'login.dart';
+
+part 'shifts.dart';
+
+part 'tasks.dart';

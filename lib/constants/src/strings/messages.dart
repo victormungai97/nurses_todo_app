@@ -25,4 +25,19 @@ class Messages {
 
   /// No response
   static const emptyResponse = 'No response found';
+
+  /// Unexpected response
+  static const weirdResponse = 'Unexpected response received';
+
+  /// No shifts found
+  static const noShifts = 'No shifts found';
+
+  /// Shift not found
+  static const shiftMissing = 'Shift not found';
+
+  /// No tasks found
+  static const noTasks = 'No tasks found';
+
+  /// Task not found
+  static const taskMissing = 'Task not found';
 }

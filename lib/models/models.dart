@@ -4,3 +4,5 @@
 
 export 'data/administrators/administrators.dart';
 export 'data/nurses/nurses.dart';
+export 'data/shifts/shifts.dart';
+export 'data/tasks/tasks.dart';

@@ -13,7 +13,7 @@ class LoginState with _$LoginState {
   const factory LoginState.load() = LoginLoading;
 
   /// Sign in action completed successfully
-  const factory LoginState.create() = LoginUserSuccess;
+  const factory LoginState.success() = LoginUserSuccess;
 
   /// Problem carrying out sign in
   const factory LoginState.failure({required String exception}) = LoginFailure;

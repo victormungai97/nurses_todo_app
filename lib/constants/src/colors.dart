@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 /// Define the various colors used in the app
 class AppColors {
+  /// Colors on which to build color scheme for application
   static const MaterialColor kPrimaryColor = MaterialColor(
     0xFF000000,
     <int, Color>{

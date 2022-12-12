@@ -5,9 +5,9 @@ part of 'navigation.dart';
 /// Custom class for Navigation
 
 class AppRouter {
-  /// Constructor
+  /// Constructor for ``[AppRouter]``
 
-  AppRouter();
+  AppRouter(this._authenticationCubit);
 
   /// Instance of `GoRouter` which facilitates navigation in this Flutter app
   /// by implementing Navigation API 2.0
@@ -19,20 +19,14 @@ class AppRouter {
     routes: <GoRoute>[
       GoRoute(
         pageBuilder: (context, GoRouterState state) {
-          /*final child = _environment != Environment.unspecified
-              ? _authenticationBloc.state is Unauthenticated
-                  ? kIsWeb
-                      ? const HomePage()
-                      : _environment == Environment.develop
-                          ? const SplashPage()
-                          : const LandingPage()
-                  : const LandingPage()
-              : ErrorScreen(Exception(translate(ErrorMessages.envNotSetup)));
-          return CupertinoPage(key: const ValueKey(Routes.root), child: child);*/
-          return CupertinoPage(
-            child: const LoginPage(key: WidgetKeys.loginPage),
-            key: const ValueKey(Routes.root),
-          );
+          Widget child = const LoginPage(key: WidgetKeys.loginPage);
+          final authState = _authenticationCubit.state;
+          if (authState is Authenticated) {
+            if (authState.role == Role.nurse) {
+              child = const ShiftsPage(key: WidgetKeys.shiftsPage);
+            }
+          }
+          return CupertinoPage(child: child, key: const ValueKey(Routes.root));
         },
         path: Routes.root,
       ),
@@ -42,8 +36,51 @@ class AppRouter {
           key: WidgetKeys.loginPage,
         ),
       ),
+      GoRoute(
+        path: Routes.shifts,
+        builder: (context, GoRouterState state) => const ShiftsPage(
+          key: WidgetKeys.shiftsPage,
+        ),
+      ),
+      GoRoute(
+        path: Routes.tasks,
+        builder: (context, GoRouterState state) {
+          context.read<TasksCubit>().updateShift(state.queryParams['shift']);
+          return const TasksPage(key: WidgetKeys.tasksPage);
+        },
+      ),
     ],
+    redirect: (context, state) {
+      final bloc = context.read<AuthCubit>();
+
+      // Checks if the user is going to the login location.
+      final isLoggingIn = {Routes.root, Routes.login}.contains(state.location);
+
+      // Checks if the user is logged in.
+      final isLoggedIn = bloc.state is Authenticated;
+
+      // Verifies that the current location is not the Login page
+      if (isLoggedIn && isLoggingIn) {
+        // If the current location is the Login page & the user is logged in,
+        // go to the Shifts screen.
+        return Routes.shifts;
+      }
+      if (!isLoggedIn && !isLoggingIn) {
+        // If the current location's not Login page & the user's not logged in,
+        // go to the Login screen.
+        return Routes.login;
+      }
+
+      // Allow default navigation to continue (no redirection)
+
+      return null;
+    },
+    // Set the router to listen for changes to the loginState.
+    refreshListenable: _GoRouterRefreshStream(_authenticationCubit.stream),
     // Declare first route to be rendered when app starts
     initialLocation: Routes.root,
   );
+
+  // Keep track of the user's logged in state
+  final AuthCubit _authenticationCubit;
 }

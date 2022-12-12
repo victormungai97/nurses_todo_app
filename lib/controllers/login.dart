@@ -12,7 +12,7 @@ class LoginController {
   });
 
   /// Sign user in
-  Future<dynamic> signUserIn({
+  Future<String?> signUserIn({
     required String email,
     required String password,
     Role? role,
@@ -34,16 +34,16 @@ class LoginController {
       if (result == null) return Messages.emptyResponse;
       if (result is String) return result;
       if (result is NurseModel) {
-        final user = result;
-        final plaintext = await encryptionService.rsaDecryption(user.password);
+        final nurse = result;
+        final plaintext = await encryptionService.rsaDecryption(nurse.password);
         if (password != plaintext) return Messages.mismatchedPassword;
       }
       if (result is AdministratorModel) {
-        final user = result;
-        final plaintext = await encryptionService.rsaDecryption(user.password);
+        final admin = result;
+        final plaintext = await encryptionService.rsaDecryption(admin.password);
         if (password != plaintext) return Messages.mismatchedPassword;
       }
-      return result;
+      return null;
     } catch (error, stackTrace) {
       log(
         'Something went wrong signing user in\n$error',
@@ -57,8 +57,8 @@ class LoginController {
   }
 
   /// Service for using Cloud Firestore
-  final DataService dataService;
+  final DataInterface dataService;
 
   /// Service for encryption
-  final EncryptionService encryptionService;
+  final EncryptionInterface encryptionService;
 }

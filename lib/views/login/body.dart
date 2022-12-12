@@ -8,6 +8,9 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loginFormBloc = context.read<LoginFormBloc>();
+    final rolesCubit = context.watch<RolesCubit>();
+    final authCubit = context.read<AuthCubit>();
+
     return Container(
       alignment: Alignment.center,
       color: Colors.white,
@@ -24,7 +27,13 @@ class _Body extends StatelessWidget {
 
           debugPrint('-- onSuccess --\n${state.successResponse}');
 
-          context.read<LoginBloc>();
+          context.read<LoginBloc>().add(
+                LoginEvent.userSignedIn(
+                  email: loginFormBloc.email.value,
+                  password: loginFormBloc.password.value,
+                  role: rolesCubit.state,
+                ),
+              );
         },
         onFailure: (context, state) {
           LoadingDialog.hide(context);
@@ -33,115 +42,140 @@ class _Body extends StatelessWidget {
             SnackBar(content: Text(state.failureResponse!)),
           );
         },
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const FlutterLogo(size: 120),
-              const SizedBox(height: 20),
-              /*if (!isStringEmpty(_errorMessage))
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 10),
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width - 20,
-                height: 80,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(width: 2),
-                  borderRadius: const BorderRadius.all(Radius.circular(5)),
-                ),
-                padding: const EdgeInsets.all(10),
-                child: const Center(
-                  child: Text(
-                    '_errorMessage',
-                    style: TextStyle(fontSize: 16, color: Colors.black),
-                    textAlign: TextAlign.center,
+        child: BlocConsumer<LoginBloc, LoginState>(
+          builder: (context, state) {
+            return SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const FlutterLogo(size: 120),
+                  const SizedBox(height: 20),
+                  if (state is LoginFailure)
+                    ErrorTextWidget(exception: state.exception),
+                  const SizedBox(height: 20),
+                  Theme(
+                    data: ThemeData(primaryColor: Colors.black),
+                    child: TextFieldBlocBuilder(
+                      textFieldBloc: loginFormBloc.email,
+                      keyboardType: TextInputType.emailAddress,
+                      autofillHints: const [
+                        AutofillHints.username,
+                      ],
+                      decoration: const InputDecoration(
+                        labelText: Labels.email,
+                        prefixIcon: Icon(Icons.email),
+                        border: OutlineInputBorder(),
+                        labelStyle: TextStyle(
+                          color: AppColors.kPrimaryColor,
+                          fontSize: 16,
+                        ),
+                        focusColor: AppColors.kPrimaryColor,
+                      ),
+                      textStyle: const TextStyle(
+                        color: AppColors.kPrimaryColor,
+                        fontSize: 16,
+                      ),
+                    ),
                   ),
-                ),
-              ),*/
-              const SizedBox(height: 20),
-              Theme(
-                data: ThemeData(primaryColor: Colors.black),
-                child: TextFieldBlocBuilder(
-                  textFieldBloc: loginFormBloc.email,
-                  keyboardType: TextInputType.emailAddress,
-                  autofillHints: const [
-                    AutofillHints.username,
+                  const SizedBox(height: 20),
+                  BlocListener<AuthCubit, AuthState>(
+                    listener: (context, state) {
+                      if (state is Authenticated) {
+                        final role = state.role;
+                        if (role == Role.admin || role == Role.nurse) {
+                          context.replace(
+                            role == Role.nurse ? Routes.shifts : Routes.root,
+                          );
+                        }
+                      }
+                    },
+                    child: Theme(
+                      data: ThemeData(primaryColor: Colors.black),
+                      child: TextFieldBlocBuilder(
+                        textFieldBloc: loginFormBloc.password,
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          labelText: Labels.password,
+                          prefixIcon: Icon(Icons.lock),
+                          border: OutlineInputBorder(),
+                          labelStyle: TextStyle(
+                            color: AppColors.kPrimaryColor,
+                            fontSize: 16,
+                          ),
+                          focusColor: AppColors.kPrimaryColor,
+                        ),
+                        textStyle: const TextStyle(
+                          color: AppColors.kPrimaryColor,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
+                  if (state is LoginLoading)
+                    const Center(child: CircularProgressIndicator())
+                  else ...[
+                    const SizedBox(height: 20),
+                    ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        foregroundColor: Colors.white,
+                        disabledForegroundColor: Colors.grey,
+                        shape: const StadiumBorder(),
+                        textStyle: GoogleFonts.berkshireSwash(fontSize: 24),
+                      ),
+                      label: const Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Text(Labels.nurseLogin),
+                      ),
+                      onPressed: () {
+                        rolesCubit.updateRole(Role.nurse);
+                        loginFormBloc.submit();
+                      },
+                      icon: const Icon(Icons.health_and_safety),
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        foregroundColor: Colors.white,
+                        disabledForegroundColor: Colors.grey,
+                        shape: const StadiumBorder(),
+                        textStyle: GoogleFonts.berkshireSwash(fontSize: 24),
+                      ),
+                      label: const Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Text(Labels.adminLogin),
+                      ),
+                      onPressed: () {
+                        rolesCubit.updateRole(Role.admin);
+                        loginFormBloc.submit();
+                      },
+                      icon: const Icon(Icons.add_moderator),
+                    ),
                   ],
-                  decoration: InputDecoration(
-                    labelText: Labels.email,
-                    prefixIcon: const Icon(Icons.email),
-                    border: const OutlineInputBorder(),
-                    labelStyle: TextStyle(
-                      color: AppColors.kPrimaryColor.shade50,
-                      fontSize: 16,
+                ],
+              ),
+            );
+          },
+          listener: (context, state) {
+            state.whenOrNull(
+              failure: (error) => ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    error,
+                    style: const TextStyle(
+                      color: AppColors.errorColor,
                     ),
-                    focusColor: AppColors.kPrimaryColor.shade50,
-                  ),
-                  textStyle: TextStyle(
-                      color: AppColors.kPrimaryColor.shade50, fontSize: 16),
-                ),
-              ),
-              const SizedBox(height: 20),
-              Theme(
-                data: ThemeData(primaryColor: Colors.black),
-                child: TextFieldBlocBuilder(
-                  textFieldBloc: loginFormBloc.password,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: Labels.password,
-                    prefixIcon: const Icon(Icons.lock),
-                    border: const OutlineInputBorder(),
-                    labelStyle: TextStyle(
-                      color: AppColors.kPrimaryColor.shade300,
-                      fontSize: 16,
-                    ),
-                    focusColor: AppColors.kPrimaryColor.shade300,
-                  ),
-                  textStyle: TextStyle(
-                    color: AppColors.kPrimaryColor.shade300,
-                    fontSize: 16,
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
-              ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
-                  foregroundColor: Colors.white,
-                  disabledForegroundColor: Colors.grey,
-                  shape: const StadiumBorder(),
-                  textStyle: GoogleFonts.berkshireSwash(fontSize: 24),
-                ),
-                label: const Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text(Labels.nurseLogin),
-                ),
-                icon: const Icon(Icons.health_and_safety),
-                onPressed: loginFormBloc.submit,
+              success: () => authCubit.authenticate(
+                loginFormBloc.email.value,
+                rolesCubit.state,
               ),
-              /*const SizedBox(height: 20),
-              ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
-                  foregroundColor: Colors.white,
-                  disabledForegroundColor: Colors.grey,
-                  shape: const StadiumBorder(),
-                  textStyle: GoogleFonts.berkshireSwash(fontSize: 24),
-                ),
-                label: const Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text(Labels.adminLogin),
-                ),
-                icon: const Icon(Icons.add_moderator),
-                onPressed: loginFormBloc.submit,
-              ),*/
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

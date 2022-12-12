@@ -1,6 +1,5 @@
 // lib/blocs/login/login_bloc.dart
 
-import 'dart:async';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
@@ -22,15 +21,23 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   Future<void> _signUserIn(
-      _UserSignedIn event, Emitter<LoginState> emit) async {
+    _UserSignedIn event,
+    Emitter<LoginState> emit,
+  ) async {
     try {
       emit(const LoginState.load());
 
-      final res = _loginController.signUserIn(
+      final res = await _loginController.signUserIn(
         email: event.email,
         password: event.password,
         role: event.role,
       );
+
+      if (res is String) {
+        emit(LoginState.failure(exception: res));
+      } else {
+        emit(const LoginUserSuccess());
+      }
     } catch (error, stackTrace) {
       log(
         'Error in Login BLoC signing user in\n$error',

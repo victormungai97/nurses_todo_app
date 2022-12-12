@@ -12,4 +12,10 @@ class Routes {
 
   /// Path to the login page
   static const login = '/login';
+
+  /// Path to the shifts page
+  static const shifts = '/shifts';
+
+  /// Path to the tasks page
+  static const tasks = '/tasks';
 }

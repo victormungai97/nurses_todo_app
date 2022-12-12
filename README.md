@@ -193,6 +193,9 @@ A number of external third-party packages have been used in this project to prov
   + Further provided and used in:
     + [_**flutter_bloc**_](https://pub.dev/packages/flutter_bloc):
       + Widgets that make it easy to integrate `blocs` and `cubits` into Flutter.
+    + [_**hydrated_bloc**_](https://pub.dev/packages/hydrated_bloc):
+      + An extension to _package:bloc_ which **automatically persists and restores states** of bloc and cubit.
+      + Built on top of [**_hive_**](https://pub.dev/packages/hive) for a **`platform-agnostic`**, performant storage layer.
 
 + [**_freezed_**](https://pub.dev/packages/freezed) and [**_freezed_annotation_**](https://pub.dev/packages/freezed_annotation):
   + Used for code generation particularly with regards to data classes **_("models")_**.
@@ -203,8 +206,15 @@ A number of external third-party packages have been used in this project to prov
   + Provides builders for handling **JSON** in application.
   + These builders generate code when finding annotations particularly for custom JSON keys.
 
++ [**_path_provider_**](https://pub.dev/packages/path_provider):
+  + Used to find commonly used locations on the filesystem on native (non-web) platforms.
+  + Works in conjunction with **_hydrated_bloc_** to set up the directory for persistent storage and access of states.
+
 + [**_build_runner_**](https://pub.dev/packages/build_runner)
   + This package provides a concrete way of generating files using Dart code, outside of tools like pub.
+
++ [**_intl_**](https://pub.dev/packages/intl)
+  + Used for date formatting.
 
 + [**_encrypt_**](https://pub.dev/packages/encrypt) and [**_pointycastle_**](https://pub.dev/packages/pointycastle):
   + Some data to be saved in Cloud Firestore due to their sensitive nature and as a result, need to be encoded. These packages provide algorithms that enable the encoding and decoding of data.
