@@ -38,7 +38,7 @@ class TaskEntry extends StatelessWidget {
     final shifts = context.watch<ShiftsBloc>().state;
     final loggedInUser = context.watch<AuthCubit>().state;
     // Only allow nurses assigned to shift to see
-    final allowedNurse =         loggedInUser is Authenticated &&
+    final allowedNurse = loggedInUser is Authenticated &&
         shifts is ShiftsObtainSuccess &&
         shifts.shifts != null &&
         shifts.shifts!.map((e) => e.workers).contains(loggedInUser.email);
@@ -46,8 +46,7 @@ class TaskEntry extends StatelessWidget {
     final started = shift.isBefore(now);
     final completed = shift.add(Utilities.shift).isBefore(now);
     final ongoing = started && !completed;
-    final actionsVisibility = ongoing &&
-        !task.completed && allowedNurse;
+    final actionsVisibility = ongoing && !task.completed && allowedNurse;
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -67,10 +66,7 @@ class TaskEntry extends StatelessWidget {
               'Shift: ${dateFormat.format(shift)}',
             ),
             trailing: completed && !started || task.completed
-                ? const Icon(
-                    Icons.done,
-                    color: Colors.green
-                  )
+                ? const Icon(Icons.done, color: Colors.green)
                 : null,
           ),
           if (actionsVisibility)
