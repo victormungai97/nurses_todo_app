@@ -134,6 +134,7 @@ class _Body extends StatelessWidget {
                       },
                       icon: const Icon(Icons.health_and_safety),
                     ),
+                    if (kDebugMode) ...[
                     const SizedBox(height: 20),
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
@@ -153,6 +154,7 @@ class _Body extends StatelessWidget {
                       },
                       icon: const Icon(Icons.add_moderator),
                     ),
+            ],
                   ],
                 ],
               ),
